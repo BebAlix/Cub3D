@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/16 13:12:37 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/16 17:57:06 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,27 @@
 
 # include <fcntl.h>
 
+# define width 800
+# define height 600
+
+typedef struct	s_pixel
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_pixel;
+
 typedef struct s_data
 {
 	char	**map;
 	void	*mlx;
 	void	*win;
+	t_pixel	pixel;
 }				t_data;
 
 void	parse_map(char *av, t_data *l);
-void	check_map(t_data *l);
-void	put_map(t_data *l);
 void	init_vars(t_data *l);
 void	play(t_data *l);
 int		close_win(t_data *l);
