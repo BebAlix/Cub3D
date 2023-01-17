@@ -28,7 +28,7 @@ typedef struct	s_parse
 	char	**file_content;
 	char	*north_texture;
 	char	*south_texture;
-	char	*est_texture;
+	char	*east_texture;
 	char	*west_texture;
 	int	F[3];
 	int	C[3];
@@ -62,6 +62,7 @@ void	ft_error(t_data *l);
 void    check_errors(int argc, char **argv);
 void    parsing(char *filename, t_parse *parse);
 void	get_file_content(char *filename, t_parse *parse);
+int    init_color(char **tab, t_parse *parse);
 
 
 #endif
