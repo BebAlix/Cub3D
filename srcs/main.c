@@ -92,10 +92,10 @@ void	init_vars(t_data *data)
 int main(int argc, char **argv)
 {
 	t_data	data;
-
+	
 	check_errors(argc, argv);
-	parsing(argv[1], &data);
+	parsing(argv[1], &data.parse);
 	init_vars(&data);
 	play(&data);
-    return (0);
+	return (0);
 }

@@ -14,6 +14,7 @@
 # define CUB3D_H
 
 # include "../libft/inc/libft.h"
+# include "../libft/inc/get_next_line.h"
 # include "../mlx_linux/mlx.h"
 # include "../mlx_linux/mlx_int.h"
 
@@ -31,6 +32,7 @@ typedef struct	s_parse
 	char	*west_texture;
 	int	F[3];
 	int	C[3];
+	int	filled;
 	char	**map;
 }				t_parse;
 
@@ -58,8 +60,8 @@ int		close_win(t_data *l);
 void	ft_error(t_data *l);
 
 void    check_errors(int argc, char **argv);
-void    parsing(char *filename, t_data *data);
-void	get_file_content(char *filename, t_data *data);
+void    parsing(char *filename, t_parse *parse);
+void	get_file_content(char *filename, t_parse *parse);
 
 
 #endif

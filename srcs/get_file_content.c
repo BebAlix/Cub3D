@@ -6,12 +6,51 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:34:05 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/17 13:58:07 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/17 15:24:09 by chjoie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+void	fill_param(char *line, t_parse *parse)
+{
+	(void) line;
+	(void) parse;
+	return ;
+}
+
+void	check_line(char *line, t_parse *parse)
+{
+	
+	if (parse->filled < 6)
+	{
+		if (ft_strncmp(line, "\n", 1) == 0)
+			return ;
+		fill_param(line, parse);
+		parse->filled++;
+	}
+
+}
+void	get_file_content(char *filename, t_parse *parse)
+{
+	char *line;
+	int  fd;
+	
+	parse->filled = 0;
+	fd = open(filename, O_RDONLY);
+	line = get_next_line(fd);
+	while (line)
+	{
+		check_line(line, parse);
+		printf("line = %s\n", line);
+		free(line);
+		line = get_next_line(fd);
+	}
+	free(line);
+	
+}
+
+/*
 static int	len_file(char *filename, t_data *data)
 {
 	int		len;
@@ -68,3 +107,4 @@ void	get_file_content(char *filename, t_data *data)
 	free (tmp);
 	tmp = NULL;
 }
+*/
