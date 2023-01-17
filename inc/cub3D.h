@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/16 17:57:06 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/17 14:16:49 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,18 @@
 # define width 800
 # define height 600
 
+typedef struct	s_parse
+{
+	char	**file_content;
+	char	*north_texture;
+	char	*south_texture;
+	char	*est_texture;
+	char	*west_texture;
+	int	F[3];
+	int	C[3];
+	char	**map;
+}				t_parse;
+
 typedef struct	s_pixel
 {
 	void	*img;
@@ -33,17 +45,21 @@ typedef struct	s_pixel
 
 typedef struct s_data
 {
-	char	**map;
 	void	*mlx;
 	void	*win;
 	t_pixel	pixel;
+	t_parse	parse;
+
 }				t_data;
 
-void	parse_map(char *av, t_data *l);
 void	init_vars(t_data *l);
 void	play(t_data *l);
 int		close_win(t_data *l);
-
 void	ft_error(t_data *l);
+
+void    check_errors(int argc, char **argv);
+void    parsing(char *filename, t_data *data);
+void	get_file_content(char *filename, t_data *data);
+
 
 #endif

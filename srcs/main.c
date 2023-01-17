@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:16:19 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/16 18:13:22 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/17 14:20:39 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,6 @@ static int	key_hook(int keycode, t_data *data)
 	return (0);
 }
 
-void	play(t_data *data)
-{
-	mlx_key_hook(data->win, key_hook, data);
-	mlx_hook(data->win, 17, 0, close_win, data);
-}
 
 void	my_mlx_pixel_put(t_pixel *pixel, int x, int y, int color)
 {
@@ -72,11 +67,19 @@ void	set_background(t_pixel pixel)
 	}
 }
 
+void	play(t_data *data)
+{
+	mlx_key_hook(data->win, key_hook, data);
+	mlx_hook(data->win, 17, 0, close_win, data);
+	mlx_loop(data->mlx);
+}
+
 void	init_vars(t_data *data)
 {
 	t_pixel pixel;
 
 	pixel = data->pixel;
+	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, width, height, "cub3D");
 	pixel.img = mlx_new_image(data->mlx, width, height);
 	pixel.addr = mlx_get_data_addr(pixel.img, &pixel.bits_per_pixel, &pixel.line_length, &pixel.endian);
@@ -84,16 +87,15 @@ void	init_vars(t_data *data)
 	//raycasting
 	mlx_put_image_to_window(data->mlx, data->win, pixel.img, 0, 0);
 	//closewindow
-
 }
 
-int main()
+int main(int argc, char **argv)
 {
 	t_data	data;
 
-	data.mlx = mlx_init();
+	check_errors(argc, argv);
+	parsing(argv[1], &data);
 	init_vars(&data);
 	play(&data);
-	mlx_loop(data.mlx);
     return (0);
 }
