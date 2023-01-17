@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/17 14:16:49 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:43:40 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void	ft_error(t_data *l);
 void    check_errors(int argc, char **argv);
 void    parsing(char *filename, t_parse *parse);
 void	get_file_content(char *filename, t_parse *parse);
-int    init_color(char **tab, t_parse *parse);
+int		background_color(char **tab, t_parse *parse);
 
+void	free_double_char(char **str);
 
 #endif

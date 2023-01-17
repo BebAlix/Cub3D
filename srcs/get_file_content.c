@@ -6,24 +6,11 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:34:05 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/17 19:31:17 by chjoie           ###   ########.fr       */
+/*   Updated: 2023/01/17 22:28:10 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	free_double_char(char **str)
-{
-	int	x;
-
-	x = 0;
-	while (str[x])
-	{
-		free(str[x]);
-		x++;
-	}
-	free(str);
-}
 
 void	free_parse_struct(t_parse *parse)
 {
@@ -42,8 +29,8 @@ void	ft_parsing_error(t_parse *parse)
 
 void	ft_remove_n(char *str)
 {
-	int 	x;
-	
+	int	x;
+
 	x = 0;
 	while (str[x] != '\0')
 		x++;
@@ -56,12 +43,11 @@ int	check_splitted_line(char **str)
 	int	i;
 
 	i = 0;
-	
-	while(str[i])
+	while (str[i])
 		i++;
 	if (i != 1)
 	{
-		if (i == 2 && !ft_strncmp(str[1],"\n", 2))
+		if (i == 2 && !ft_strncmp(str[1], "\n", 2))
 			ft_remove_n(str[1]);
 		else
 			return (0);
@@ -75,12 +61,9 @@ int	check_splitted_line(char **str)
 	return (1);*/
 }
 
-
-
 int	fill_param(char *line, t_parse *parse)
 {
 	char	**split_line;
-
 
 	split_line = ft_split(line, ' ');
 	if (check_splitted_line(split_line) == 0)
@@ -90,17 +73,17 @@ int	fill_param(char *line, t_parse *parse)
 	}
 	ft_remove_n(split_line[1]);
 	if (ft_strncmp(split_line[0], "NO", 3) == 0 && parse->north_texture == NULL)
-			parse->north_texture = ft_strdup(split_line[1]);	
+			parse->north_texture = ft_strdup(split_line[1]);
 	if (ft_strncmp(split_line[0], "SO", 3) == 0 && parse->south_texture == NULL)
 			parse->south_texture = ft_strdup(split_line[1]);
 	if (ft_strncmp(split_line[0], "WE", 3) == 0 && parse->west_texture == NULL)
-			parse->west_texture = ft_strdup(split_line[1]);	
+			parse->west_texture = ft_strdup(split_line[1]);
 	if (ft_strncmp(split_line[0], "EA", 3) == 0 && parse->east_texture == NULL)
 			parse->east_texture = ft_strdup(split_line[1]);
-	if(!ft_strncmp(split_line[0], "F", 2) || !ft_strncmp(split_line[0], "C", 2))
+	if (!ft_strncmp(split_line[0], "F", 2) || !ft_strncmp(split_line[0], "C", 2))
 	{
 		printf("line %s\n", split_line[1]);
-		if (init_color(split_line, parse) == 0)
+		if (background_color(split_line, parse) == 0)
 			return (0);
 	}
 	free_double_char(split_line);
@@ -131,7 +114,7 @@ int	check_line(char *line, t_parse *parse)
 {
 	if (parse->filled < 6)
 	{
-		if (ft_strncmp(line, "\n",1) == 0)
+		if (ft_strncmp(line, "\n", 1) == 0)
 			return (1);
 		if (fill_param(line, parse) == 0)
 			return (0);
@@ -150,27 +133,33 @@ int	check_line(char *line, t_parse *parse)
 
 void	init_parse_struct(t_parse *parse)
 {
+	int	i;
+
+	i = 0;
 	parse->north_texture = NULL;
 	parse->south_texture = NULL;
 	parse->east_texture = NULL;
 	parse->west_texture = NULL;
 	parse->filled = 0;
-	parse->F[0] = -1;
-	parse->C[0] = -1;
+	while (i < 3)
+	{
+		parse->F[i] = -1;
+		parse->C[i] = -1;
+		i++;
+	}
 	return ;
 }
 
 void	get_file_content(char *filename, t_parse *parse)
 {
-	char *line;
-	int  fd;
+	char	*line;
+	int		fd;
 
 	init_parse_struct(parse);
 	fd = open(filename, O_RDONLY);
 	line = get_next_line(fd);
 	while (line)
 	{
-
 		if (check_line(line, parse) == 0)
 		{
 			free(line);
@@ -185,5 +174,5 @@ void	get_file_content(char *filename, t_parse *parse)
 		free(line);
 		line = get_next_line(fd);
 	}
-	free(line);	
+	free(line);
 }
