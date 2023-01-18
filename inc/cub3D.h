@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/17 20:43:40 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:34:34 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 typedef struct	s_parse
 {
-	char	**file_content;
+	char	*file_content;
 	char	*north_texture;
 	char	*south_texture;
 	char	*east_texture;
@@ -65,5 +65,6 @@ void	get_file_content(char *filename, t_parse *parse);
 int		background_color(char **tab, t_parse *parse);
 
 void	free_double_char(char **str);
+void	free_parse_struct(t_parse *parse);
 
 #endif

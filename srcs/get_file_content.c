@@ -6,19 +6,11 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:34:05 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/18 12:19:13 by chjoie           ###   ########.fr       */
+/*   Updated: 2023/01/18 15:09:32 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	free_parse_struct(t_parse *parse)
-{
-	free(parse->north_texture);
-	free(parse->south_texture);
-	free(parse->west_texture);
-	free(parse->east_texture);
-}
 
 void	ft_parsing_error(t_parse *parse)
 {	
@@ -108,6 +100,15 @@ int	check_all_param(t_parse *parse)
 		return (1);
 }
 
+void	filled_map(char *line, t_parse *parse)
+{
+	char	*tmp;
+
+	tmp = parse->file_content;
+	parse->file_content = ft_strjoin(tmp, line);
+	free(tmp);
+}
+
 int	check_line(char *line, t_parse *parse)
 {
 	if (parse->filled < 6)
@@ -119,7 +120,7 @@ int	check_line(char *line, t_parse *parse)
 		parse->filled++;
 	}
 	else if (check_all_param(parse) == 1)
-		printf("besoin de parse la map\n");
+		filled_map(line, parse);
 	else
 		return (0);
 	return (1);
@@ -141,6 +142,7 @@ void	init_parse_struct(t_parse *parse)
 		parse->C[i] = -1;
 		i++;
 	}
+	parse->file_content = calloc(sizeof(char), 1);
 	return ;
 }
 
@@ -149,7 +151,7 @@ void	content_error(int fd, char *line, t_parse *parse)
 	free(line);
 	line = get_next_line(fd);
 	while (line)
-	{	
+	{
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -162,11 +164,10 @@ int	first_line_map(char *line)
 
 	x = 0;
 	printf("line = %s\n", line);
-	ft_remove_n(line);
 	while (line[x] != '\0')
 	{
 		printf("line[x] = %c\n", line[x]);
-		if (line[x] == '1' || line[x] == ' ')
+		if (line[x] == '1' || line[x] == ' ' || line[x] == '\n')
 			x++;
 		else
 			return (0);
@@ -207,6 +208,7 @@ void	get_file_content(char *filename, t_parse *parse)
 		free(line);
 		line = get_next_line(fd);
 	}
+	parse->map = ft_split(parse->file_content, '\n');
 	free(line);
 	close(fd);
 }
