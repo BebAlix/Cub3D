@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:13:06 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/18 15:05:05 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:48:29 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ void	ft_error(t_data *data)
 {
 	(void)data;
 	ft_putendl_fd("Error\nMap invalid !", 2);
-	exit(0);
+	exit(1);
 }

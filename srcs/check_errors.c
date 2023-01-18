@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 22:08:37 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/17 20:30:32 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:48:21 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	check_nb_arg(int argc)
 	{
 		ft_putendl_fd("Error\n", 2);
 		ft_putendl_fd("Wrong number of arguments !", 2);
-		exit(0);
+		exit(1);
 	}
 }
 
@@ -33,7 +33,7 @@ static void	check_extension(char *argv)
 	{
 		ft_putendl_fd("Error\n", 2);
 		ft_putendl_fd("Wrong map extension !", 2);
-		exit(0);
+		exit(1);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:06:59 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/17 22:26:02 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:41:56 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static int	filled_c(t_parse *parse, char **color)
 		if (parse->C[i] != -1)
 		{
 			error_msg("Color c is in double");
-			return (0);
+			return (false);
 		}
 		parse->C[i] = ft_atoi(color[i]);
 		i++;
 	}
-	return (1);
+	return (true);
 }
 
 static int	filled_color(char *name, t_parse *parse, char **color)
@@ -48,7 +48,7 @@ static int	filled_color(char *name, t_parse *parse, char **color)
 			if (parse->F[i] != -1)
 			{
 				error_msg("Color F is in double");
-				return (0);
+				return (false);
 			}
 			parse->F[i] = ft_atoi(color[i]);
 			i++;
@@ -56,8 +56,31 @@ static int	filled_color(char *name, t_parse *parse, char **color)
 	}
 	else if (!ft_strncmp(name, "c", 2))
 		if (!filled_c(parse, color))
-			return (0);
-	return (1);
+			return (false);
+	return (true);
+}
+
+static int	check_size(char *color)
+{
+	char	*base;
+	int		i;
+
+	base = "255";
+	i = 0;
+	if (ft_strlen(color) > 3)
+		return (false);
+	if (ft_strlen(color) < 3)
+		return (true);
+	while (color[i])
+	{
+		if (color[i] == base[i])
+			i++;
+		else if (color[i] > base[i])
+			return (false);
+		else
+			return (true);
+	}
+	return (true);
 }
 
 static int	check_digit(char **color)
@@ -71,11 +94,10 @@ static int	check_digit(char **color)
 		j = 0;
 		while (color[i][j])
 		{
-			printf("digit = %c\n", color[i][j]);
-			if (!ft_isdigit(color[i][j]))
+			if (!ft_isdigit(color[i][j]) || !check_size(color[i]))
 			{
-				error_msg("Color need only digits");
-				return (0);
+				error_msg("Color need only digits between 0 and 255");
+				return (false);
 			}
 			j++;
 		}
@@ -84,9 +106,9 @@ static int	check_digit(char **color)
 	if (i != 3)
 	{
 		error_msg("Color need 3 arguments");
-		return (0);
+		return (false);
 	}
-	return (1);
+	return (true);
 }
 
 int	background_color(char **tab, t_parse *parse)
@@ -94,10 +116,11 @@ int	background_color(char **tab, t_parse *parse)
 	char	**color;
 
 	color = ft_split(tab[1], ',');
-	if (!check_digit(color))
-		return (0);
-	if (!filled_color(tab[0], parse, color))
-		return (0);
+	if (!check_digit(color) || !filled_color(tab[0], parse, color))
+	{
+		free_double_char(color);
+		return (false);
+	}
 	free_double_char(color);
-	return (1);
+	return (true);
 }

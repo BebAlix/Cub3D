@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/18 14:34:34 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:02:58 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 
 # define width 800
 # define height 600
+# define true 1
+# define false 0
 
 typedef struct	s_parse
 {

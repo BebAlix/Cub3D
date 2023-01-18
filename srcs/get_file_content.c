@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:34:05 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/18 15:09:32 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:47:08 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ int	check_splitted_line(char **str)
 	if (i == 2 || i == 3)
 	{
 		if (ft_strncmp(str[i - 1], "\n", 2) && i == 3)
-			return (0);
+			return (false);
 		else
 		{
 			ft_remove_n(str[i - 1]);
-			return (1);
+			return (true);
 		}
 	}
-	return (0);
+	return (false);
 }
 
 int	fill_param(char *line, t_parse *parse)
@@ -58,7 +58,7 @@ int	fill_param(char *line, t_parse *parse)
 	if (check_splitted_line(split_line) == 0)
 	{
 		free_double_char(split_line);
-		return (0);
+		return (false);
 	}
 	if (!ft_strncmp(split_line[0], "NO", 3) && !parse->north_texture)
 			parse->north_texture = ft_strdup(split_line[1]);
@@ -70,43 +70,49 @@ int	fill_param(char *line, t_parse *parse)
 			parse->east_texture = ft_strdup(split_line[1]);
 	else if (!ft_strncmp(split_line[0], "F", 2) || !ft_strncmp(split_line[0], "C", 2))
 	{
-		printf("line %s\n", split_line[1]);
 		if (background_color(split_line, parse) == 0)
 		{	
 			free_double_char(split_line);
-			return (0);
+			return (false);
 		}
 	}
 	else
 	{
 		free_double_char(split_line);
-		return (0);
+		return (false);
 	}
 	free_double_char(split_line);
-	return (1);
+	return (true);
 }
 
 int	check_all_param(t_parse *parse)
 {
 	if (parse->north_texture == NULL)
-		return (0);
+		return (false);
 	if (parse->south_texture == NULL)
-		return (0);
+		return (false);
 	if (parse->east_texture == NULL)
-		return (0);
+		return (false);
 	if (parse->west_texture == NULL)
-		return (0);
+		return (false);
 	else
-		return (1);
+		return (true);
 }
 
-void	filled_map(char *line, t_parse *parse)
+int	filled_file_content(char *line, t_parse *parse)
 {
 	char	*tmp;
+	int		i;
 
+	i = 0;
+	while (line[i] == ' ' && line[i])
+		i++;
+	if (line[i] == '\n' && line[i])
+		return (false);
 	tmp = parse->file_content;
 	parse->file_content = ft_strjoin(tmp, line);
 	free(tmp);
+	return (true);
 }
 
 int	check_line(char *line, t_parse *parse)
@@ -114,16 +120,19 @@ int	check_line(char *line, t_parse *parse)
 	if (parse->filled < 6)
 	{
 		if (ft_strncmp(line, "\n", 2) == 0)
-			return (1);
+			return (true);
 		if (fill_param(line, parse) == 0)
-			return (0);
+			return (false);
 		parse->filled++;
 	}
 	else if (check_all_param(parse) == 1)
-		filled_map(line, parse);
+	{
+		if (!filled_file_content(line, parse))
+			return (false);
+	}
 	else
-		return (0);
-	return (1);
+		return (false);
+	return (true);
 }
 
 void	init_parse_struct(t_parse *parse)
@@ -163,23 +172,20 @@ int	first_line_map(char *line)
 	int	x;
 
 	x = 0;
-	printf("line = %s\n", line);
 	while (line[x] != '\0')
 	{
-		printf("line[x] = %c\n", line[x]);
 		if (line[x] == '1' || line[x] == ' ' || line[x] == '\n')
 			x++;
 		else
-			return (0);
+			return (false);
 	}
-	return (1);
+	return (true);
 }
 
 char	*go_to_map(int fd, char *line, t_parse *parse)
 {
 	while (!ft_strncmp(line, "\n", 2))
 	{
-		printf("line avant map = %s\n", line);
 		free(line);
 		line = get_next_line(fd);
 	}
