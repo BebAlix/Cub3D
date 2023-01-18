@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/18 16:02:58 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/18 22:58:08 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@
 
 # define width 800
 # define height 600
+
+# define blue 0x87CEEB
+# define brown 0xBC8F8F
+# define grey 0xD3D3D3
+# define white 0xFFFFF0
+# define red 0xB22222
+
 # define true 1
 # define false 0
 
@@ -47,24 +54,32 @@ typedef struct	s_pixel
 	int		endian;
 }				t_pixel;
 
+typedef struct	s_player
+{
+	double	x;
+	double	y;
+}				t_player;
+
 typedef struct s_data
 {
-	void	*mlx;
-	void	*win;
-	t_pixel	pixel;
-	t_parse	parse;
+	void		*mlx;
+	void		*win;
+	t_pixel		pixel;
+	t_parse		parse;
+	t_player	player;
 
 }				t_data;
 
-void	init_vars(t_data *l);
-void	play(t_data *l);
-int		close_win(t_data *l);
-void	ft_error(t_data *l);
+void	init_vars(t_data *data);
+void	play(t_data *data);
+int		close_win(t_data *data);
+void	ft_error(t_data *data);
 
 void    check_errors(int argc, char **argv);
 void    parsing(char *filename, t_parse *parse);
 void	get_file_content(char *filename, t_parse *parse);
 int		background_color(char **tab, t_parse *parse);
+void    display_map(t_data *data ,t_pixel pixel);
 
 void	free_double_char(char **str);
 void	free_parse_struct(t_parse *parse);

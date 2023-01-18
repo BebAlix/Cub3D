@@ -6,72 +6,32 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:16:19 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/17 20:14:20 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/18 23:25:10 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	key_hook(int keycode, t_data *data)
+void	init_player_position(t_player *player, char **map)
 {
-	if (keycode == XK_Escape)
-		close_win(data);
-/*	if (keycode == XK_w)
-		move;
-	if (keycode == XK_a)
-		move;
-	if (keycode == XK_s)
-		move;
-	if (keycode == XK_d)
-		move*/
-	return (0);
-}
+	int	i;
+	int	j;
 
-void	my_mlx_pixel_put(t_pixel *pixel, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = pixel->addr + (y * pixel->line_length + x
-			* (pixel->bits_per_pixel / 8));
-	*(unsigned int *) dst = color;
-}
-
-void	set_background(t_pixel pixel)
-{
-	int	x;
-	int	y;
-	int	middle;
-
-	x = 0;
-	y = 0;
-	middle = height / 2;
-	while (y < middle)
+	i = 0;
+	while (map[i])
 	{
-		my_mlx_pixel_put(&pixel, x, y, 0x87CEEB);
-		if (x == width)
+		j = 0;
+		while (map[i][j])
 		{
-			x = 0;
-			y++;
+			if (map[i][j] == 'N' || map[i][j] == 'W' || map[i][j] == 'E' || map[i][j] == 'S')
+			{
+				player->x = i + 0.5;
+				player->y = j + 0.5;
+			}
+			j++;
 		}
-		x++;
+		i++;
 	}
-	while (y < height)
-	{
-		my_mlx_pixel_put(&pixel, x, y, 0xBC8F8F);
-		if (x == width)
-		{
-			x = 0;
-			y++;
-		}
-		x++;
-	}
-}
-
-void	play(t_data *data)
-{
-	mlx_key_hook(data->win, key_hook, data);
-	mlx_hook(data->win, 17, 0, close_win, data);
-	mlx_loop(data->mlx);
 }
 
 void	init_vars(t_data *data)
@@ -84,8 +44,10 @@ void	init_vars(t_data *data)
 	pixel.img = mlx_new_image(data->mlx, width, height);
 	pixel.addr = mlx_get_data_addr(pixel.img, &pixel.bits_per_pixel,
 			&pixel.line_length, &pixel.endian);
-	set_background(pixel);
+	init_player_position(&data->player, data->parse.map);
+	//set_background(pixel);
 	//raycasting
+	display_map(data, pixel);
 	mlx_put_image_to_window(data->mlx, data->win, pixel.img, 0, 0);
 	//closewindow
 }
