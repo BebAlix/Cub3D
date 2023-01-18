@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:34:05 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/17 22:28:10 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/18 12:19:13 by chjoie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	free_parse_struct(t_parse *parse)
 void	ft_parsing_error(t_parse *parse)
 {	
 	free_parse_struct(parse);
-	printf("Error\nWrong Map parameter 1!!\n");
+	printf("Error\nWrong Map parameter !!\n");
 	exit(1);
 }
 
@@ -45,20 +45,17 @@ int	check_splitted_line(char **str)
 	i = 0;
 	while (str[i])
 		i++;
-	if (i != 1)
+	if (i == 2 || i == 3)
 	{
-		if (i == 2 && !ft_strncmp(str[1], "\n", 2))
-			ft_remove_n(str[1]);
+		if (ft_strncmp(str[i - 1], "\n", 2) && i == 3)
+			return (0);
 		else
-			return (0);
+		{
+			ft_remove_n(str[i - 1]);
+			return (1);
+		}
 	}
-	return (1);
-	/*if (str[2] != NULL)
-	{
-		if (ft_strncmp(str[2], "\n", 2) != 0)
-			return (0);
-	}
-	return (1);*/
+	return (0);
 }
 
 int	fill_param(char *line, t_parse *parse)
@@ -71,20 +68,27 @@ int	fill_param(char *line, t_parse *parse)
 		free_double_char(split_line);
 		return (0);
 	}
-	ft_remove_n(split_line[1]);
-	if (ft_strncmp(split_line[0], "NO", 3) == 0 && parse->north_texture == NULL)
+	if (!ft_strncmp(split_line[0], "NO", 3) && !parse->north_texture)
 			parse->north_texture = ft_strdup(split_line[1]);
-	if (ft_strncmp(split_line[0], "SO", 3) == 0 && parse->south_texture == NULL)
+	else if (!ft_strncmp(split_line[0], "SO", 3) && !parse->south_texture)
 			parse->south_texture = ft_strdup(split_line[1]);
-	if (ft_strncmp(split_line[0], "WE", 3) == 0 && parse->west_texture == NULL)
+	else if (!ft_strncmp(split_line[0], "WE", 3) && !parse->west_texture)
 			parse->west_texture = ft_strdup(split_line[1]);
-	if (ft_strncmp(split_line[0], "EA", 3) == 0 && parse->east_texture == NULL)
+	else if (!ft_strncmp(split_line[0], "EA", 3) && !parse->east_texture)
 			parse->east_texture = ft_strdup(split_line[1]);
-	if (!ft_strncmp(split_line[0], "F", 2) || !ft_strncmp(split_line[0], "C", 2))
+	else if (!ft_strncmp(split_line[0], "F", 2) || !ft_strncmp(split_line[0], "C", 2))
 	{
 		printf("line %s\n", split_line[1]);
 		if (background_color(split_line, parse) == 0)
+		{	
+			free_double_char(split_line);
 			return (0);
+		}
+	}
+	else
+	{
+		free_double_char(split_line);
+		return (0);
 	}
 	free_double_char(split_line);
 	return (1);
@@ -100,12 +104,6 @@ int	check_all_param(t_parse *parse)
 		return (0);
 	if (parse->west_texture == NULL)
 		return (0);
-//	else if (parse->filled != 4)
-//		return (0);
-//	else if (parse->F[0] == -1)
-//		return (0);
-//	else if (parse->C[0] == -1)
-//		return (0);
 	else
 		return (1);
 }
@@ -114,20 +112,16 @@ int	check_line(char *line, t_parse *parse)
 {
 	if (parse->filled < 6)
 	{
-		if (ft_strncmp(line, "\n", 1) == 0)
+		if (ft_strncmp(line, "\n", 2) == 0)
 			return (1);
 		if (fill_param(line, parse) == 0)
 			return (0);
-		printf("parse fill = %d\n", parse->filled);
 		parse->filled++;
 	}
 	else if (check_all_param(parse) == 1)
 		printf("besoin de parse la map\n");
 	else
-	{
-	//	printf("Error\n Wrong Map parameter 2!!\n");
 		return (0);
-	}
 	return (1);
 }
 
@@ -150,6 +144,49 @@ void	init_parse_struct(t_parse *parse)
 	return ;
 }
 
+void	content_error(int fd, char *line, t_parse *parse)
+{
+	free(line);
+	line = get_next_line(fd);
+	while (line)
+	{	
+		free(line);
+		line = get_next_line(fd);
+	}
+	ft_parsing_error(parse);
+}
+
+int	first_line_map(char *line)
+{
+	int	x;
+
+	x = 0;
+	printf("line = %s\n", line);
+	ft_remove_n(line);
+	while (line[x] != '\0')
+	{
+		printf("line[x] = %c\n", line[x]);
+		if (line[x] == '1' || line[x] == ' ')
+			x++;
+		else
+			return (0);
+	}
+	return (1);
+}
+
+char	*go_to_map(int fd, char *line, t_parse *parse)
+{
+	while (!ft_strncmp(line, "\n", 2))
+	{
+		printf("line avant map = %s\n", line);
+		free(line);
+		line = get_next_line(fd);
+	}
+	if (first_line_map(line) == 0)
+		content_error(fd, line, parse);
+	return (line);
+}
+
 void	get_file_content(char *filename, t_parse *parse)
 {
 	char	*line;
@@ -160,19 +197,16 @@ void	get_file_content(char *filename, t_parse *parse)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (check_line(line, parse) == 0)
+		if (parse->filled == 6)
 		{
-			free(line);
-			line = get_next_line(fd);
-			while (line)
-			{	
-				free(line);
-				line = get_next_line(fd);
-			}
-			ft_parsing_error(parse);
+			line = go_to_map(fd, line, parse);
+			parse->filled++;
 		}
+		if (check_line(line, parse) == 0)
+			content_error(fd, line, parse);
 		free(line);
 		line = get_next_line(fd);
 	}
 	free(line);
+	close(fd);
 }
