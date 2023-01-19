@@ -42,6 +42,7 @@ typedef struct s_parse
 	int		f[3];
 	int		c[3];
 	int		filled;
+	char	player_position;
 	char	**map;
 }				t_parse;
 
@@ -76,9 +77,11 @@ int		close_win(t_data *data);
 void	ft_error(t_data *data);
 
 void	check_errors(int argc, char **argv);
+int	check_valid_map(char **map, char *position);
 void	parsing(char *filename, t_parse *parse);
 void	get_file_content(char *filename, t_parse *parse);
 int		background_color(char **tab, t_parse *parse);
+void	error_msg(char *str);
 
 void	set_background(t_pixel pixel);
 void	print_map(t_pixel pixel, t_parse *parse);

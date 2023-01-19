@@ -15,7 +15,6 @@
 void	ft_parsing_error(t_parse *parse)
 {	
 	free_parse_struct(parse);
-	printf("Error\nWrong Map parameter !!\n");
 	exit(1);
 }
 
@@ -164,6 +163,7 @@ void	content_error(int fd, char *line, t_parse *parse)
 		free(line);
 		line = get_next_line(fd);
 	}
+	error_msg("File content is not valid");
 	ft_parsing_error(parse);
 }
 
@@ -215,8 +215,17 @@ void	get_file_content(char *filename, t_parse *parse)
 		line = get_next_line(fd);
 	}
 	parse->map = ft_split(parse->file_content, '\n');
-	if (!parse->map)
-		ft_parsing_error(parse);
 	free(line);
 	close(fd);
+	if (!parse->map)
+	{
+		error_msg("File content is not valid");
+		ft_parsing_error(parse);
+	}
+	if (!check_valid_map(parse->map, &parse->player_position))
+	{
+		free_double_char(parse->map);
+		error_msg("Map description is not valid");
+		ft_parsing_error(parse);
+	}
 }
