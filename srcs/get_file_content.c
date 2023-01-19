@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:34:05 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/19 11:31:36 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:27:01 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,11 @@ void	get_file_content(char *filename, t_parse *parse)
 
 	init_parse_struct(parse);
 	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+	{
+		error_msg("File doesn't exist");
+		ft_parsing_error(parse);
+	}
 	line = get_next_line(fd);
 	while (line)
 	{

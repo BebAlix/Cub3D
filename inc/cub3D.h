@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/19 12:25:40 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:40:44 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "../mlx_linux/mlx_int.h"
 
 # include <fcntl.h>
+# include <math.h>
 
 # define WIDTH 800
 # define HEIGHT 600
@@ -59,6 +60,9 @@ typedef struct s_player
 {
 	double	x;
 	double	y;
+	double	pdx;
+	double	pdy;
+	double	pa;
 }				t_player;
 
 typedef struct s_data

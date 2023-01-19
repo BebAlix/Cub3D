@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 22:34:42 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/19 13:06:14 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:06:43 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,41 @@ void	move_player(t_data *data, char move)
 	mlx_put_image_to_window(data->mlx, data->win, data->pixel.img, 0, 0);
 }
 
+void	rotate_player(t_data *data, char move)
+{
+	
+	if (move == 'a')
+	{
+      double oldDirX;
+
+	  oldDirX = data->player.pdx;
+      data->player.pdx = data->player.pdx * cos(5) - data->player.pdy * sin(5);
+      data->player.pdy = oldDirX * sin(5) + data->player.pdy * cos(5);
+	}
+	printf("pdx = %f\n", data->player.pdx);
+	printf("pdy = %f\n", data->player.pdy);
+	/*if (move == 'd')
+	{
+		data->player.pa += 0.1;
+		if (data->player.pa > 2 * M_PI)
+			data->player.pa -= 2 * M_PI;
+		data->player.pdx = cos(data->player.pa) * 5;
+		data->player.pdy = sin(data->player.pa) * 5;
+	}*/
+}
+
 static int	key_hook(int keycode, t_data *data)
 {
 	if (keycode == XK_Escape)
 		close_win(data);
 	if (keycode == XK_w)
 		move_player(data, 'w');
-	if (keycode == XK_a)
-		move_player(data, 'a');
 	if (keycode == XK_s)
 		move_player(data, 's');
+	if (keycode == XK_a)
+		rotate_player(data, 'a');
 	if (keycode == XK_d)
-		move_player(data, 'd');
+		rotate_player(data, 'd');
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:16:19 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/19 12:09:59 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:49:42 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,11 @@ void	init_player_position(t_player *player, char **map)
 		}
 		i++;
 	}
+	player->pa =90;
 }
 
 void	init_vars(t_data *data)
 {
-	// t_data->pixel	data->pixel;
-
-	// data->pixel = data->data->pixel;
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "cub3D");
 	data->pixel.img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
@@ -48,9 +46,9 @@ void	init_vars(t_data *data)
 	//set_background(data->pixel);
 	//raycasting
 	display_map(data, data->pixel);
-	mlx_put_image_to_window(data->mlx, data->win, data->pixel.img, 0, 0);
-	play(data);
+	// play(data);
 	//closewindow
+	mlx_put_image_to_window(data->mlx, data->win, data->pixel.img, 0, 0);
 }
 
 int	main(int argc, char **argv)
@@ -63,3 +61,7 @@ int	main(int argc, char **argv)
 	play(&data);
 	return (0);
 }
+
+//math.h
+
+// angle * (M_PI / 180); angle en radian
