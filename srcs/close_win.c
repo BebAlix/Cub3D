@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:13:06 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/18 16:48:29 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/19 13:02:14 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	close_win(t_data *data)
 {
 	mlx_clear_window(data->mlx, data->win);
-	//mlx_destroy_image(data->mlx, data->pixel.img);
+	mlx_destroy_image(data->mlx, data->pixel.img);
 	mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_display(data->mlx);
 	free(data->mlx);

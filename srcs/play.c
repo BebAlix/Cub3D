@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 22:34:42 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/19 12:22:31 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/19 13:06:14 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	key_hook(int keycode, t_data *data)
 
 void	play(t_data *data)
 {
-	mlx_key_hook(data->win, key_hook, data);
+	mlx_hook(data->win, 2, 1L << 0, key_hook, data);
 	mlx_hook(data->win, 17, 0, close_win, data);
 	mlx_loop(data->mlx);
 }
