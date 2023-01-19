@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:16:19 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/18 23:25:10 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/19 12:09:59 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	init_player_position(t_player *player, char **map)
 		{
 			if (map[i][j] == 'N' || map[i][j] == 'W' || map[i][j] == 'E' || map[i][j] == 'S')
 			{
-				player->x = i + 0.5;
-				player->y = j + 0.5;
+				player->x = (i + 0.5) * 32;
+				player->y = (j + 0.5) * 32;
 			}
 			j++;
 		}
@@ -36,19 +36,20 @@ void	init_player_position(t_player *player, char **map)
 
 void	init_vars(t_data *data)
 {
-	t_pixel	pixel;
+	// t_data->pixel	data->pixel;
 
-	pixel = data->pixel;
+	// data->pixel = data->data->pixel;
 	data->mlx = mlx_init();
-	data->win = mlx_new_window(data->mlx, width, height, "cub3D");
-	pixel.img = mlx_new_image(data->mlx, width, height);
-	pixel.addr = mlx_get_data_addr(pixel.img, &pixel.bits_per_pixel,
-			&pixel.line_length, &pixel.endian);
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "cub3D");
+	data->pixel.img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	data->pixel.addr = mlx_get_data_addr(data->pixel.img, &data->pixel.bits_per_pixel,
+			&data->pixel.line_length, &data->pixel.endian);
 	init_player_position(&data->player, data->parse.map);
-	//set_background(pixel);
+	//set_background(data->pixel);
 	//raycasting
-	display_map(data, pixel);
-	mlx_put_image_to_window(data->mlx, data->win, pixel.img, 0, 0);
+	display_map(data, data->pixel);
+	mlx_put_image_to_window(data->mlx, data->win, data->pixel.img, 0, 0);
+	play(data);
 	//closewindow
 }
 

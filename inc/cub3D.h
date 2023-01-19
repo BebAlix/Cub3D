@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/18 22:58:08 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/19 12:25:40 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,32 @@
 
 # include <fcntl.h>
 
-# define width 800
-# define height 600
+# define WIDTH 800
+# define HEIGHT 600
 
-# define blue 0x87CEEB
-# define brown 0xBC8F8F
-# define grey 0xD3D3D3
-# define white 0xFFFFF0
-# define red 0xB22222
+# define BLUE 0x87CEEB
+# define BROWN 0xBC8F8F
+# define GREY 0xD3D3D3
+# define WHITE 0xFFFFF0
+# define RED 0xB22222
 
-# define true 1
-# define false 0
+# define TRUE 1
+# define FALSE 0
 
-typedef struct	s_parse
+typedef struct s_parse
 {
 	char	*file_content;
 	char	*north_texture;
 	char	*south_texture;
 	char	*east_texture;
 	char	*west_texture;
-	int	F[3];
-	int	C[3];
-	int	filled;
+	int		f[3];
+	int		c[3];
+	int		filled;
 	char	**map;
 }				t_parse;
 
-typedef struct	s_pixel
+typedef struct s_pixel
 {
 	void	*img;
 	char	*addr;
@@ -54,7 +54,7 @@ typedef struct	s_pixel
 	int		endian;
 }				t_pixel;
 
-typedef struct	s_player
+typedef struct s_player
 {
 	double	x;
 	double	y;
@@ -75,11 +75,15 @@ void	play(t_data *data);
 int		close_win(t_data *data);
 void	ft_error(t_data *data);
 
-void    check_errors(int argc, char **argv);
-void    parsing(char *filename, t_parse *parse);
+void	check_errors(int argc, char **argv);
+void	parsing(char *filename, t_parse *parse);
 void	get_file_content(char *filename, t_parse *parse);
 int		background_color(char **tab, t_parse *parse);
-void    display_map(t_data *data ,t_pixel pixel);
+
+void	set_background(t_pixel pixel);
+void	print_map(t_pixel pixel, t_parse *parse);
+void	print_player(t_pixel pixel, double x, double y, int color);
+void	display_map(t_data *data, t_pixel pixel);
 
 void	free_double_char(char **str);
 void	free_parse_struct(t_parse *parse);

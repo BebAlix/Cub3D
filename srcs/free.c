@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:42:24 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/18 15:02:07 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/19 11:23:19 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ void	free_double_char(char **str)
 	while (str[x])
 	{
 		free(str[x]);
+		str[x] = NULL;
 		x++;
 	}
 	free(str);
+	str = NULL;
 }
 
 void	free_parse_struct(t_parse *parse)
