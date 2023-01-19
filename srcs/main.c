@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:16:19 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/19 15:49:42 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:03:49 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ void	init_player_position(t_player *player, char **map)
 		}
 		i++;
 	}
-	player->pa =90;
+	player->pa = M_PI / 2;
+	player->pdx = -1;
+	player->pdy = 0;
 }
 
 void	init_vars(t_data *data)
