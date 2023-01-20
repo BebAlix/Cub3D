@@ -6,35 +6,43 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:16:19 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/19 18:03:49 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/20 15:02:31 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	init_player_position(t_player *player, char **map)
+void	init_player_position(t_player *player, char **map, char orientation)
 {
-	int	i;
-	int	j;
+	int	y;
+	int	x;
 
-	i = 0;
-	while (map[i])
+	y = 0;
+	while (map[y])
 	{
-		j = 0;
-		while (map[i][j])
+		x = 0;
+		while (map[y][x])
 		{
-			if (map[i][j] == 'N' || map[i][j] == 'W' || map[i][j] == 'E' || map[i][j] == 'S')
+			if (map[y][x] == orientation)
 			{
-				player->x = (i + 0.5) * 32;
-				player->y = (j + 0.5) * 32;
+				player->x = (x + 0.5);
+				player->y = (y + 0.5);
 			}
-			j++;
+			x++;
 		}
-		i++;
+		y++;
 	}
-	player->pa = M_PI / 2;
-	player->pdx = -1;
-	player->pdy = 0;
+	printf("orientation = %c\n", orientation);
+	if (orientation == 'N')
+		player->pa = M_PI / 2.0;
+	if (orientation == 'S')
+		player->pa = (M_PI * 3.0) / 2.0;
+	if (orientation == 'E')
+		player->pa = M_PI * 2.0;
+	if (orientation == 'W')
+		player->pa = M_PI;
+	player->pdx = 0.0;
+	player->pdy = 0.1;
 }
 
 void	init_vars(t_data *data)
@@ -44,22 +52,20 @@ void	init_vars(t_data *data)
 	data->pixel.img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->pixel.addr = mlx_get_data_addr(data->pixel.img, &data->pixel.bits_per_pixel,
 			&data->pixel.line_length, &data->pixel.endian);
-	init_player_position(&data->player, data->parse.map);
+	init_player_position(&data->player, data->parse.map, data->parse.player_position);
 	//set_background(data->pixel);
 	//raycasting
-	display_map(data, data->pixel);
-	// play(data);
-	//closewindow
-	mlx_put_image_to_window(data->mlx, data->win, data->pixel.img, 0, 0);
 }
 
 int	main(int argc, char **argv)
 {
 	t_data	data;
 
+	printf("pi = %f\n", M_PI);
 	check_errors(argc, argv);
 	parsing(argv[1], &data.parse);
 	init_vars(&data);
+	display_map(&data, data.pixel);
 	play(&data);
 	return (0);
 }

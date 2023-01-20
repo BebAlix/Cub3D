@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 22:26:08 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/19 14:53:16 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/20 15:20:51 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ void	my_mlx_pixel_put(t_pixel *pixel, int x, int y, int color)
 
 void	set_background(t_pixel pixel)
 {
-	int	x;
 	int	y;
+	int	x;
 	int	middle;
 
-	x = 0;
-	y = 0;
-	middle = HEIGHT / 2;
+	x = 0.0;
+	y = 0.0;
+	middle = HEIGHT / 2.0;
 	while (y < middle)
 	{
 		my_mlx_pixel_put(&pixel, x, y, BLUE);
 		if (x == WIDTH)
 		{
-			x = 0;
+			x = 0.0;
 			y++;
 		}
 		x++;
@@ -45,7 +45,7 @@ void	set_background(t_pixel pixel)
 		my_mlx_pixel_put(&pixel, x, y, BROWN);
 		if (x == WIDTH)
 		{
-			x = 0;
+			x = 0.0;
 			y++;
 		}
 		x++;
@@ -54,74 +54,94 @@ void	set_background(t_pixel pixel)
 
 void	create_square(t_pixel pixel, int x, int y, int color)
 {
-	int	x_max;
 	int	y_max;
+	int	x_max;
 
-	x_max = x + 32;
-	y_max = y + 32;
-	x += 1;
-	while (x < x_max)
+	x_max = x + 32.0;
+	y_max = y + 32.0;
+	y += 1.0;
+	while (y < y_max)
 	{
-		while (y < y_max)
+		while (x < x_max)
 		{
-			my_mlx_pixel_put(&pixel, y, x, color);
-			y++;
+			my_mlx_pixel_put(&pixel, x, y, color);
+			x++;
 		}
-		y -= 31;
-		x++;
+		x -= 31.0;
+		y++;
 	}
 }
 
 void	print_map(t_pixel pixel, t_parse *parse)
 {
-	int	x;
 	int	y;
+	int	x;
 
-	x = 0;
-	while (parse->map[x])
+	y = 0;
+	while (parse->map[y])
 	{
-		y = 0;
-		while (parse->map[x][y])
+		x = 0;
+		while (parse->map[y][x])
 		{
-			if (parse->map[x][y] != ' ')
+			if (parse->map[y][x] != ' ')
 			{
-				if (parse->map[x][y] == '0')
-					create_square(pixel, x * 32, y * 32, WHITE);
-				if (parse->map[x][y] == '1')
-					create_square(pixel, x * 32, y * 32, GREY);
-				if (parse->map[x][y] == 'N' || parse->map[x][y] == 'W' || parse->map[x][y] == 'E' || parse->map[x][y] == 'S')
-					create_square(pixel, x * 32, y * 32, WHITE);
+				if (parse->map[y][x] == '0')
+					create_square(pixel, x * 32.0, y * 32.0, WHITE);
+				if (parse->map[y][x] == '1')
+					create_square(pixel, x * 32.0, y * 32.0, GREY);
+				if (parse->map[y][x] == 'N' || parse->map[y][x] == 'W' || parse->map[y][x] == 'E' || parse->map[y][x] == 'S')
+					create_square(pixel, x * 32.0, y * 32.0, WHITE);
 			}
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 }
 
 void	print_player(t_pixel pixel, double x, double y, int color)
 {
-	int	x_max;
 	int	y_max;
+	int	x_max;
 
-	x_max = x + 4;
-	y_max = y + 4;
-	x -= 4;
-	y -= 4;
-	while (x < x_max)
+	y_max = y + 4.0;
+	x_max = x + 4.0;
+	x -= 4.0;
+	y -= 4.0;
+	while (y < y_max)
 	{
-		while (y < y_max)
+		while (x < x_max)
 		{
-			my_mlx_pixel_put(&pixel, y, x, color);
-			y++;
+			my_mlx_pixel_put(&pixel, x, y, color);
+			x++;
 		}
-		y -= 8;
-		x++;
+		x -= 8.0;
+		y++;
 	}
+
+}
+
+void	print_zigouigoui(t_pixel pixel, t_player* player, int color)
+{
+	int i;
+	double ray_x;
+	double ray_y;
+	ray_x = player->x * 32 - player->pdx;
+	ray_y = player->y * 32 - player->pdy;
+	i = 5;
+	while (i--)
+	{
+		ray_x++;
+		ray_y++;
+		my_mlx_pixel_put(&pixel, ray_x, ray_y, color);
+	}
+
 }
 
 void	display_map(t_data *data, t_pixel pixel)
 {
 	set_background(pixel);
 	print_map(pixel, &data->parse);
-	print_player(pixel, data->player.x, data->player.y, RED);
+	print_player(pixel, data->player.x * 32.0, data->player.y * 32.0, RED);
+	print_zigouigoui(pixel, &data->player, RED);
+	mlx_put_image_to_window(data->mlx, data->win, data->pixel.img, 0, 0);
 }
