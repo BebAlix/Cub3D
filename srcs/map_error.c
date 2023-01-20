@@ -45,6 +45,8 @@ int	map_height(char **map)
 
 int	surrounded(char **map, int i, int j)
 {
+	if (j > (int)ft_strlen(map[i + 1]) || j > (int)ft_strlen(map[i - 1]))
+		return (FALSE);
 	if (!ft_strchr("0WSEN1", map[i - 1][j]) || map[i - 1][j] == '\0')
 		return (FALSE);
 	if (!ft_strchr("0WSEN1", map[i + 1][j]) || map[i + 1][j] == '\0')
@@ -102,10 +104,11 @@ int	check_valid_map(char **map, char *position)
 	error = 1;
 	player = 0;
 	i = 0;
+	
 	while (map[i])
 	{
 		if (!check_items(map[i], &player, position))
-			break ;
+			return (FALSE);
 		i++;
 	}
 	if (player != 1)

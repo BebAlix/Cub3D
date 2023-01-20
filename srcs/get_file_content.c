@@ -72,7 +72,7 @@ int	fill_param(char *line, t_parse *parse)
 		if (background_color(split_line, parse) == 0)
 		{	
 			free_double_char(split_line);
-			return (FALSE);
+			return (-2);
 		}
 	}
 	else
@@ -116,12 +116,17 @@ int	filled_file_content(char *line, t_parse *parse)
 
 int	check_line(char *line, t_parse *parse)
 {
+	int check;
+	
+	check = fill_param(line, parse);
 	if (parse->filled < 6)
 	{
 		if (ft_strncmp(line, "\n", 2) == 0)
 			return (TRUE);
-		if (fill_param(line, parse) == 0)
+		if (check == 0)
 			return (FALSE);
+		else if (check == -2)
+			return (-2);
 		parse->filled++;
 	}
 	else if (check_all_param(parse) == 1)
@@ -154,7 +159,7 @@ void	init_parse_struct(t_parse *parse)
 	return ;
 }
 
-void	content_error(int fd, char *line, t_parse *parse)
+void	content_error(int fd, char *line, t_parse *parse, int color)
 {
 	free(line);
 	line = get_next_line(fd);
@@ -163,7 +168,8 @@ void	content_error(int fd, char *line, t_parse *parse)
 		free(line);
 		line = get_next_line(fd);
 	}
-	error_msg("File content is not valid");
+	if (color != -2)
+		error_msg("File content is not valid");
 	ft_parsing_error(parse);
 }
 
@@ -190,7 +196,7 @@ char	*go_to_map(int fd, char *line, t_parse *parse)
 		line = get_next_line(fd);
 	}
 	if (first_line_map(line) == 0)
-		content_error(fd, line, parse);
+		content_error(fd, line, parse, 0);
 	return (line);
 }
 
@@ -198,7 +204,8 @@ void	get_file_content(char *filename, t_parse *parse)
 {
 	char	*line;
 	int		fd;
-
+	int	check = 0;
+	
 	init_parse_struct(parse);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
@@ -214,8 +221,11 @@ void	get_file_content(char *filename, t_parse *parse)
 			line = go_to_map(fd, line, parse);
 			parse->filled++;
 		}
-		if (check_line(line, parse) == 0)
-			content_error(fd, line, parse);
+		check = check_line(line, parse);
+		if (check == -2)
+			content_error(fd, line, parse, -2);
+		else if (check == 0)
+			content_error(fd, line, parse, 0);
 		free(line);
 		line = get_next_line(fd);
 	}
