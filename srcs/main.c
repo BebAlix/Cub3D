@@ -41,8 +41,8 @@ void	init_player_position(t_player *player, char **map, char orientation)
 		player->pa = M_PI * 2.0;
 	if (orientation == 'W')
 		player->pa = M_PI;
-	player->pdx = 0.0;
-	player->pdy = 0.1;
+	player->pdx = cos(player->pa) * 0.1;
+	player->pdy = sin(player->pa) * 0.1;
 }
 
 void	init_vars(t_data *data)
@@ -69,7 +69,5 @@ int	main(int argc, char **argv)
 	play(&data);
 	return (0);
 }
-
-//math.h
 
 // angle * (M_PI / 180); angle en radian

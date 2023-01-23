@@ -16,15 +16,15 @@ void	move_player(t_data *data, char move)
 {
 	if (move == 'w')
 	{
-		data->player.x -= data->player.pdx;
-		data->player.y -= data->player.pdy;
-	}
-	if (move == 's')
-	{
 		data->player.x += data->player.pdx;
 		data->player.y += data->player.pdy;
 	}
-	if (move == 'a')
+	if (move == 's')
+	{
+		data->player.x -= data->player.pdx;
+		data->player.y -= data->player.pdy;
+	}
+/*	if (move == 'a')
 	{
 		data->player.x += data->player.pdx;
 		data->player.y -= data->player.pdy;
@@ -33,11 +33,7 @@ void	move_player(t_data *data, char move)
 	{
 		data->player.x -= data->player.pdx;
 		data->player.y += data->player.pdy;
-	}
-	set_background(data->pixel);
-	print_map(data->pixel, &data->parse);
-	print_player(data->pixel, data->player.x * 32.0, data->player.y * 32.0, RED);
-	mlx_put_image_to_window(data->mlx, data->win, data->pixel.img, 0, 0);
+	}*/
 }
 
 void	rotate_player(t_data *data, char move)
@@ -61,7 +57,7 @@ void	rotate_player(t_data *data, char move)
 	}
 	printf("pdx = %f\n", data->player.pdx);
 	printf("pdy = %f\n", data->player.pdy);
-	printf("pa = %f\n", data->player.pa);
+//	printf("pa = %f\n", data->player.pa);
 }
 
 static int	key_hook(int keycode, t_data *data)
@@ -80,6 +76,7 @@ static int	key_hook(int keycode, t_data *data)
 		rotate_player(data, 'r');
 	if (keycode == XK_Left)
 		rotate_player(data, 'l');
+	display_map(data, data->pixel);
 	return (0);
 }
 

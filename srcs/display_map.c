@@ -98,7 +98,21 @@ void	print_map(t_pixel pixel, t_parse *parse)
 	}
 }
 
-void	print_player(t_pixel pixel, double x, double y, int color)
+void	print_zigouigoui(t_pixel pixel, t_player *player, double x, double y, int color)
+{
+	(void) player;
+	int	i;
+	
+	i = 0;
+	while (i < 100)
+	{
+		my_mlx_pixel_put(&pixel, x + (player->pdx * i), y + (player->pdy * i), color);
+		i++;
+	}
+
+}
+
+void	print_player(t_pixel pixel, t_player *player, double x, double y, int color)
 {
 	int	y_max;
 	int	x_max;
@@ -117,31 +131,16 @@ void	print_player(t_pixel pixel, double x, double y, int color)
 		x -= 8.0;
 		y++;
 	}
-
-}
-
-void	print_zigouigoui(t_pixel pixel, t_player* player, int color)
-{
-	int i;
-	double ray_x;
-	double ray_y;
-	ray_x = player->x * 32 - player->pdx;
-	ray_y = player->y * 32 - player->pdy;
-	i = 5;
-	while (i--)
-	{
-		ray_x++;
-		ray_y++;
-		my_mlx_pixel_put(&pixel, ray_x, ray_y, color);
-	}
-
+	//if (player->pa < 0.0)
+	print_zigouigoui(pixel, player, x + 4.0 , y - 4.0, RED);
+//	if (player->pa > 2.0 * M_PI)
+//		print_zigouigoui(pixel, player, x , y + 4.0 , RED);
 }
 
 void	display_map(t_data *data, t_pixel pixel)
 {
 	set_background(pixel);
 	print_map(pixel, &data->parse);
-	print_player(pixel, data->player.x * 32.0, data->player.y * 32.0, RED);
-	print_zigouigoui(pixel, &data->player, RED);
+	print_player(pixel, &data->player, data->player.x * 32.0, data->player.y * 32.0, RED);
 	mlx_put_image_to_window(data->mlx, data->win, data->pixel.img, 0, 0);
 }
