@@ -63,6 +63,13 @@ typedef struct s_player
 	double	pdx;
 	double	pdy;
 	double	pa;
+	double	planeX;
+	double	planeY;
+	double	rayDirX;
+	double	rayDirY;
+//	double	camera;
+//	double time;
+//	double oldTime;
 }				t_player;
 
 typedef struct s_data
@@ -89,7 +96,8 @@ void	error_msg(char *str);
 void	set_background(t_pixel pixel);
 void	print_map(t_pixel pixel, t_parse *parse);
 void	print_player(t_pixel pixel, t_player *player, double x, double y, int color);
-void	display_map(t_data *data, t_pixel pixel);
+void	print_zigouigoui(t_pixel pixel, t_player *player, double x, double y, int color);
+void	display_map(t_data *data, t_pixel pixel, char **map);
 
 void	free_double_char(char **str);
 void	free_parse_struct(t_parse *parse);

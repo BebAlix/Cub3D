@@ -24,6 +24,7 @@ void	move_player(t_data *data, char move)
 		data->player.x -= data->player.pdx;
 		data->player.y -= data->player.pdy;
 	}
+	//display_map(data, data->pixel);
 /*	if (move == 'a')
 	{
 		data->player.x += data->player.pdx;
@@ -42,7 +43,7 @@ void	rotate_player(t_data *data, char move)
 	if (move == 'l')
 	{
 		data->player.pa -= 0.1;
-		if (data->player.pa < 0.0)
+		if (data->player.pa < 2.0 * M_PI)
 			data->player.pa += 2.0 * M_PI;
 		data->player.pdx = cos(data->player.pa) * 0.1;
 		data->player.pdy = sin(data->player.pa) * 0.1;
@@ -55,6 +56,7 @@ void	rotate_player(t_data *data, char move)
 		data->player.pdx = cos(data->player.pa) * 0.1;
 		data->player.pdy = sin(data->player.pa) * 0.1;
 	}
+	//print_zigouigoui(pixel, player, x + 4.0 , y - 4.0 , RED);
 	printf("pdx = %f\n", data->player.pdx);
 	printf("pdy = %f\n", data->player.pdy);
 //	printf("pa = %f\n", data->player.pa);
@@ -76,7 +78,7 @@ static int	key_hook(int keycode, t_data *data)
 		rotate_player(data, 'r');
 	if (keycode == XK_Left)
 		rotate_player(data, 'l');
-	display_map(data, data->pixel);
+	display_map(data, data->pixel, data->parse.map);
 	return (0);
 }
 
@@ -85,6 +87,7 @@ void	play(t_data *data)
 	printf("pdx = %f\n", data->player.pdx);
 	printf("pdy = %f\n", data->player.pdy);
 	printf("pa = %f\n", data->player.pa);
+	printf("\n\n");
 	mlx_hook(data->win, 2, 1L << 0, key_hook, data);
 	mlx_hook(data->win, 17, 0, close_win, data);
 	mlx_loop(data->mlx);
