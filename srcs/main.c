@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:16:19 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/20 15:02:31 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/25 18:34:30 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	init_player_position(t_player *player, char **map, char orientation)
 		player->pa = M_PI;
 	player->pdx = cos(player->pa) * 0.1;
 	player->pdy = sin(player->pa) * 0.1;
-	//player->camera = 0.33;
 }
 
 void	init_vars(t_data *data)
@@ -54,8 +53,7 @@ void	init_vars(t_data *data)
 	data->pixel.addr = mlx_get_data_addr(data->pixel.img, &data->pixel.bits_per_pixel,
 			&data->pixel.line_length, &data->pixel.endian);
 	init_player_position(&data->player, data->parse.map, data->parse.player_position);
-	data->player.planeX = 0;
-	data->player.planeY = 0.66;
+	
 	//set_background(data->pixel);
 	//raycasting
 }

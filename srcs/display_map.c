@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 22:26:08 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/20 15:20:51 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/25 18:32:55 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,20 +174,22 @@ void	ray_casting(t_pixel pixel, t_player *player, char **map)
 	int	side;
 	//int	lineHeight = ()
 	(void) pixel;
+
+	player->planeX = -0.1;
+	player->planeY = 0.1;
 	while (x < WIDTH)
 	{
 		cameraX = 2 * x / (double)WIDTH - 1;
 		player->rayDirX = player->pdx + player->planeX * cameraX;
 		player->rayDirY = player->pdy + player->planeY * cameraX;
-		x++;
 		if (player->rayDirX)
-			deltaDistX = 1e30;
+			deltaDistX = 1^30;
 		else
-			deltaDistX = abs(1 /  (int)player->rayDirX);
+			deltaDistX = (1 / (int)player->rayDirX);
 		if (player->rayDirY)
-			deltaDistY = 1e30;
+			deltaDistY = 1^30;
 		else
-			deltaDistY = abs(1 /  (int)player->rayDirY);
+			deltaDistY = (1 / (int)player->rayDirY);
 			
 		if (player->rayDirX < 0)
 		{
@@ -226,23 +228,28 @@ void	ray_casting(t_pixel pixel, t_player *player, char **map)
 			if (map[mapY][mapX] == '1')
 				hit = 1;
 		}
-	if (side == 0)
-		perpWallDist = (sideDistX - deltaDistX);
-	else
-		perpWallDist = (sideDistY - deltaDistY);
-	//Calculate height of line to draw on screen
-	int lineHeight = (int)(HEIGHT / perpWallDist);
-      
-	//calculate lowest and highest pixel to fill in current stripe
-	int drawStart = -lineHeight / 2 + HEIGHT / 2;
-	if(drawStart < 0)
-		drawStart = 0;
-	int drawEnd = lineHeight / 2 + HEIGHT / 2;
-	if(drawEnd >= HEIGHT) 
-		drawEnd = HEIGHT - 1;
-	my_mlx_pixel_put(&pixel, drawEnd, drawStart, 997485);
-	my_mlx_pixel_put(&pixel, drawEnd + 1, drawStart, 997485);
-}
+		if (side == 0)
+			perpWallDist = (sideDistX - deltaDistX);
+		else
+			perpWallDist = (sideDistY - deltaDistY);
+		//Calculate height of line to draw on screen
+		int lineHeight = (int)(HEIGHT / perpWallDist);
+	
+		//calculate lowest and highest pixel to fill in current stripe
+		int drawStart = -lineHeight / 2 + HEIGHT / 2;
+		if(drawStart < 0)
+			drawStart = 0;
+		int drawEnd = lineHeight / 2 + HEIGHT / 2;
+		if(drawEnd >= HEIGHT) 
+			drawEnd = HEIGHT - 1;
+		while (drawStart < drawEnd)
+		{
+			my_mlx_pixel_put(&pixel, x, drawStart, RED);
+			drawStart++;
+		}
+		printf("x = %d\n", x);
+		x++;
+	}
 }
 
 void	display_map(t_data *data, t_pixel pixel, char **map)
