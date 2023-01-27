@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 22:34:42 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/20 15:13:31 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/27 18:23:17 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,60 @@
 
 void	move_player(t_data *data, char move)
 {
+
 	if (move == 'w')
 	{
-		data->player.x += data->player.pdx;
-		data->player.y += data->player.pdy;
+		if(data->parse.map[(int)(data->player.y - 1)][(int)(data->player.x - 1 + data->player.pdx * 0.1)] != '1')
+			data->player.x += data->player.pdx * 0.1;
+		if(data->parse.map[(int)(data->player.y - 1 + data->player.pdy * 0.1)][(int)(data->player.x - 1)] != '1')
+			data->player.y += data->player.pdy * 0.1;
 	}
 	if (move == 's')
 	{
-		data->player.x -= data->player.pdx;
-		data->player.y -= data->player.pdy;
-	}
-	//display_map(data, data->pixel);
-/*	if (move == 'a')
-	{
-		data->player.x += data->player.pdx;
-		data->player.y -= data->player.pdy;
+		if(data->parse.map[(int)(data->player.y + 1)][(int)(data->player.x + 1 - data->player.pdx * 0.1)] != '1')
+			data->player.x -= data->player.pdx * 0.1;
+		if(data->parse.map[(int)(data->player.y + 1 - data->player.pdy * 0.1)][(int)(data->player.x + 1)] != '1')
+			data->player.y -= data->player.pdy * 0.1;
 	}
 	if (move == 'd')
 	{
-		data->player.x -= data->player.pdx;
-		data->player.y += data->player.pdy;
-	}*/
+		if(data->parse.map[(int)(data->player.y + 0.2)][(int)(data->player.x + 0.2 + data->player.planeX * 0.1)] != '1')
+			data->player.x += data->player.planeX * 0.1;
+		if(data->parse.map[(int)(data->player.y + 0.2 + data->player.planeY * 0.1)][(int)(data->player.x + 0.2)] != '1')
+			data->player.y += data->player.planeY * 0.1;
+	}
+	if (move == 'a')
+	{
+		if(data->parse.map[(int)(data->player.y - 0.2)][(int)(data->player.x - 0.2 - data->player.planeX * 0.1)] != '1')
+			data->player.x -= data->player.planeX * 0.1;
+		if(data->parse.map[(int)(data->player.y - 0.2 - data->player.planeY * 0.1)][(int)(data->player.x - 0.2)] != '1')
+			data->player.y -= data->player.planeY * 0.1;
+	}
 }
 
-void	rotate_player(t_data *data, char move)
+void	rotate_player(t_player *player, char move)
 {
 	
 	if (move == 'l')
 	{
-		data->player.pa -= 0.1;
-		if (data->player.pa < 2.0 * M_PI)
-			data->player.pa += 2.0 * M_PI;
-		data->player.pdx = cos(data->player.pa) * 0.5;
-		data->player.pdy = sin(data->player.pa) * 0.5;
+		double oldDirX = player->pdx;
+    	player->pdx = player->pdx* cos(0.1) - player->pdy * sin(0.1);
+    	player->pdy = oldDirX * sin(0.1) + player->pdy * cos(0.1);
+    	double oldPlaneX = player->planeX;
+    	player->planeX = player->planeX * cos(0.1) - player->planeY * sin(0.1);
+    	player->planeY = oldPlaneX * sin(0.1) + player->planeY * cos(0.1);
 	}
 	if (move == 'r')
 	{
-		data->player.pa += 0.1;
-		if (data->player.pa > 2.0 * M_PI)
-			data->player.pa -= 2.0 * M_PI;
-		data->player.pdx = cos(data->player.pa) * 0.5;
-		data->player.pdy = sin(data->player.pa) * 0.5;
+		double oldDirX = player->pdx;
+    	player->pdx = player->pdx* cos(-0.1) - player->pdy * sin(-0.1);
+    	player->pdy = oldDirX * sin(-0.1) + player->pdy * cos(-0.1);
+    	double oldPlaneX = player->planeX;
+    	player->planeX = player->planeX * cos(-0.1) - player->planeY * sin(-0.1);
+    	player->planeY = oldPlaneX * sin(-0.1) + player->planeY * cos(-0.1);
 	}
-	//print_zigouigoui(pixel, player, x + 4.0 , y - 4.0 , RED);
-	printf("pdx = %f\n", data->player.pdx);
-	printf("pdy = %f\n", data->player.pdy);
+	printf("pdx = %f\n", player->pdx);
+	printf("pdy = %f\n", player->pdy);
 //	printf("pa = %f\n", data->player.pa);
 }
 
@@ -74,10 +83,10 @@ static int	key_hook(int keycode, t_data *data)
 		move_player(data, 'a');
 	if (keycode == XK_d)
 		move_player(data, 'd');
-//	if (keycode == XK_Right)
-//		rotate_player(data, 'r');
-//	if (keycode == XK_Left)
-//		rotate_player(data, 'l');
+	if (keycode == XK_Right)
+		rotate_player(&data->player, 'r');
+	if (keycode == XK_Left)
+		rotate_player(&data->player, 'l');
 	display_map(data, &data->pixel, data->parse.map);
 	return (0);
 }
@@ -88,6 +97,6 @@ void	play(t_data *data)
 	printf("pdy = %f\n", data->player.pdy);
 	//printf("pa = %f\n", data->player.pa);
 	mlx_hook(data->win, 2, 1L << 0, key_hook, data);
-	//mlx_hook(data->win, 17, 0, close_win, data);
+	mlx_hook(data->win, 17, 0, close_win, data);
 	mlx_loop(data->mlx);
 }

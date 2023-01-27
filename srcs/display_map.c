@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 22:26:08 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/20 15:20:51 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:45:22 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	draw_vertical_line(t_pixel *pixel, int x, int drawStart, int drawEnd, int c
 	int	i;
 	
 	i = drawStart;
-	printf("drawStart = %d\n", drawStart);
-	printf("drawEnd = %d\n", drawEnd);
 	while (i < drawEnd)
 	{
 		my_mlx_pixel_put(pixel, x , i, color);
@@ -90,17 +88,22 @@ void	raycasting(t_pixel *pixel, t_player *player, char **map)
 	int	drawEnd;
 	
 	x = 0;
-	while (x < 800)
+	while (x < WIDTH)
 	{
-		hit = 0;
-		player->cameraX = (2 * x) / ((double) WIDTH - 1);
+		player->cameraX = (2 * x) / (double) WIDTH - 1;
 		player->rayDirX = player->pdx + player->planeX * player->cameraX;
 		player->rayDirY = player->pdy + player->planeY * player->cameraX;
 		
 		
-		printf("player->rayDirX = %f\n", player->rayDirX);
-		printf("player->rayDirY = %f\n", player->rayDirY);
-		printf("player->cameraX = %f\n",player->cameraX);
+		// printf("player->rayDirX = %f\n", player->rayDirX);
+		// printf("player->rayDirY = %f\n", player->rayDirY);
+		// printf("player->cameraX = %f\n",player->cameraX);
+		printf("player->pdx = %f\n",player->pdx);
+		printf("player->pdy = %f\n",player->pdy);
+		printf("player->x = %f\n",player->x);
+		printf("player->y = %f\n",player->y);
+		printf("player->planex = %f\n",player->planeX);
+		printf("player->planey = %f\n",player->planeY);
 		
 		
 		mapX = (int) player->x;
@@ -134,10 +137,9 @@ void	raycasting(t_pixel *pixel, t_player *player, char **map)
 			stepY = 1;
 			sideDistY = (mapY + 1.0 - player->y) * deltaDistY;
 		}
-		int z = 0;
+		hit = 0;
 		while (hit == 0)
 		{
-			printf("z = %d\n", z);
 			if (sideDistX < sideDistY)
 			{
 				sideDistX += deltaDistX;
@@ -150,13 +152,12 @@ void	raycasting(t_pixel *pixel, t_player *player, char **map)
 				mapY += stepY;
 				side = 1;
 			}
-			if (map[mapY][mapX] == '1')
-				hit = 1;
 			if (side == 0)
 				perpWallDist = (sideDistX - deltaDistX);
 			else
 				perpWallDist = (sideDistY - deltaDistY);
-			z++;
+			if (map[mapY][mapX] == '1')
+				hit = 1;
 		}
 		lineHeight = (int) (HEIGHT / perpWallDist);
 		drawStart = -lineHeight / 2 + HEIGHT / 2;
