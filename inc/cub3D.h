@@ -62,22 +62,20 @@ typedef struct s_player
 	double	y;
 	double	pdx;
 	double	pdy;
-	double	pa;
 	double	planeX;
 	double	planeY;
 	double	rayDirX;
 	double	rayDirY;
-//	double	camera;
-//	double time;
-//	double oldTime;
+	double	pa;
+	double	cameraX;
 }				t_player;
 
 typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
-	t_pixel		pixel;
-	t_parse		parse;
+	t_pixel	pixel;
+	t_parse	parse;
 	t_player	player;
 }				t_data;
 
@@ -93,11 +91,11 @@ void	get_file_content(char *filename, t_parse *parse);
 int		background_color(char **tab, t_parse *parse);
 void	error_msg(char *str);
 
-void	set_background(t_pixel pixel);
+void	set_background(t_pixel *pixel);
 void	print_map(t_pixel pixel, t_parse *parse);
 void	print_player(t_pixel pixel, t_player *player, double x, double y, int color);
 void	print_zigouigoui(t_pixel pixel, t_player *player, double x, double y, int color);
-void	display_map(t_data *data, t_pixel pixel, char **map);
+void	display_map(t_data *data, t_pixel *pixel, char **map);
 
 void	free_double_char(char **str);
 void	free_parse_struct(t_parse *parse);

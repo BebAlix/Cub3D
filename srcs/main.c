@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:16:19 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/25 18:34:30 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/20 15:02:31 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,20 @@ void	init_player_position(t_player *player, char **map, char orientation)
 		{
 			if (map[y][x] == orientation)
 			{
-				player->x = (x + 0.5);
-				player->y = (y + 0.5);
+				//printf("%c",map[y][x]);
+				//player->x = (x + 0.5);
+				player->x = x + 0.5;
+				player->y = y + 0.5;
 			}
 			x++;
 		}
 		y++;
 	}
+	player->pdx = -1;
+	player->pdy = 0;
+	player->planeX = 0;
+	player->planeY = 0.66;
+/*	
 	printf("orientation = %c\n", orientation);
 	if (orientation == 'S')
 		player->pa = M_PI / 2.0;
@@ -40,20 +47,22 @@ void	init_player_position(t_player *player, char **map, char orientation)
 	if (orientation == 'E')
 		player->pa = M_PI * 2.0;
 	if (orientation == 'W')
-		player->pa = M_PI;
-	player->pdx = cos(player->pa) * 0.1;
-	player->pdy = sin(player->pa) * 0.1;
+		player->pa = M_PI;*/
+	//player->pdx = cos(player->pa) * 0.1;
+	//player->pdy = sin(player->pa) * 0.1;
+	//player->camera = 0.33;
 }
 
 void	init_vars(t_data *data)
 {
 	data->mlx = mlx_init();
+	if (!data->mlx)
+		return ; // free and exit
 	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "cub3D");
 	data->pixel.img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->pixel.addr = mlx_get_data_addr(data->pixel.img, &data->pixel.bits_per_pixel,
 			&data->pixel.line_length, &data->pixel.endian);
 	init_player_position(&data->player, data->parse.map, data->parse.player_position);
-	
 	//set_background(data->pixel);
 	//raycasting
 }
@@ -61,12 +70,11 @@ void	init_vars(t_data *data)
 int	main(int argc, char **argv)
 {
 	t_data	data;
-
-	printf("pi = %f\n", M_PI);
+	
 	check_errors(argc, argv);
-	parsing(argv[1], &data.parse);
+	get_file_content(argv[1], &data.parse);
 	init_vars(&data);
-	display_map(&data, data.pixel, data.parse.map);
+	display_map(&data, &data.pixel, data.parse.map);
 	play(&data);
 	return (0);
 }
