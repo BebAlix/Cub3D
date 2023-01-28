@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 22:34:42 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/27 18:23:17 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:05:23 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,61 +14,57 @@
 
 void	move_player(t_data *data, char move)
 {
-
 	if (move == 'w')
 	{
-		if(data->parse.map[(int)(data->player.y - 1)][(int)(data->player.x - 1 + data->player.pdx * 0.1)] != '1')
+		if (data->parse.map[(int)(data->player.y - 1)][(int)(data->player.x - 1 + data->player.pdx * 0.1)] != '1')
 			data->player.x += data->player.pdx * 0.1;
-		if(data->parse.map[(int)(data->player.y - 1 + data->player.pdy * 0.1)][(int)(data->player.x - 1)] != '1')
+		if (data->parse.map[(int)(data->player.y - 1 + data->player.pdy * 0.1)][(int)(data->player.x - 1)] != '1')
 			data->player.y += data->player.pdy * 0.1;
 	}
 	if (move == 's')
 	{
-		if(data->parse.map[(int)(data->player.y + 1)][(int)(data->player.x + 1 - data->player.pdx * 0.1)] != '1')
+		if (data->parse.map[(int)(data->player.y + 1)][(int)(data->player.x + 1 - data->player.pdx * 0.1)] != '1')
 			data->player.x -= data->player.pdx * 0.1;
-		if(data->parse.map[(int)(data->player.y + 1 - data->player.pdy * 0.1)][(int)(data->player.x + 1)] != '1')
+		if (data->parse.map[(int)(data->player.y + 1 - data->player.pdy * 0.1)][(int)(data->player.x + 1)] != '1')
 			data->player.y -= data->player.pdy * 0.1;
 	}
 	if (move == 'd')
 	{
-		if(data->parse.map[(int)(data->player.y + 0.2)][(int)(data->player.x + 0.2 + data->player.planeX * 0.1)] != '1')
-			data->player.x += data->player.planeX * 0.1;
-		if(data->parse.map[(int)(data->player.y + 0.2 + data->player.planeY * 0.1)][(int)(data->player.x + 0.2)] != '1')
-			data->player.y += data->player.planeY * 0.1;
+		if (data->parse.map[(int)(data->player.y + 0.2)][(int)(data->player.x + 0.2 + data->player.plane_x * 0.1)] != '1')
+			data->player.x += data->player.plane_x * 0.1;
+		if (data->parse.map[(int)(data->player.y + 0.2 + data->player.plane_y * 0.1)][(int)(data->player.x + 0.2)] != '1')
+			data->player.y += data->player.plane_y * 0.1;
 	}
 	if (move == 'a')
 	{
-		if(data->parse.map[(int)(data->player.y - 0.2)][(int)(data->player.x - 0.2 - data->player.planeX * 0.1)] != '1')
-			data->player.x -= data->player.planeX * 0.1;
-		if(data->parse.map[(int)(data->player.y - 0.2 - data->player.planeY * 0.1)][(int)(data->player.x - 0.2)] != '1')
-			data->player.y -= data->player.planeY * 0.1;
+		if (data->parse.map[(int)(data->player.y - 0.2)][(int)(data->player.x - 0.2 - data->player.plane_x * 0.1)] != '1')
+			data->player.x -= data->player.plane_x * 0.1;
+		if (data->parse.map[(int)(data->player.y - 0.2 - data->player.plane_y * 0.1)][(int)(data->player.x - 0.2)] != '1')
+			data->player.y -= data->player.plane_y * 0.1;
 	}
 }
 
 void	rotate_player(t_player *player, char move)
 {
-	
+	double	old_dir_x;
+	double	old_plane_x;
+
+	old_dir_x = player->pdx;
+	old_plane_x = player->plane_x;
 	if (move == 'l')
 	{
-		double oldDirX = player->pdx;
-    	player->pdx = player->pdx* cos(0.1) - player->pdy * sin(0.1);
-    	player->pdy = oldDirX * sin(0.1) + player->pdy * cos(0.1);
-    	double oldPlaneX = player->planeX;
-    	player->planeX = player->planeX * cos(0.1) - player->planeY * sin(0.1);
-    	player->planeY = oldPlaneX * sin(0.1) + player->planeY * cos(0.1);
+		player->pdx = player->pdx * cos(0.1) - player->pdy * sin(0.1);
+		player->pdy = old_dir_x * sin(0.1) + player->pdy * cos(0.1);
+		player->plane_x = player->plane_x * cos(0.1) - player->plane_y * sin(0.1);
+		player->plane_y = old_plane_x * sin(0.1) + player->plane_y * cos(0.1);
 	}
 	if (move == 'r')
 	{
-		double oldDirX = player->pdx;
-    	player->pdx = player->pdx* cos(-0.1) - player->pdy * sin(-0.1);
-    	player->pdy = oldDirX * sin(-0.1) + player->pdy * cos(-0.1);
-    	double oldPlaneX = player->planeX;
-    	player->planeX = player->planeX * cos(-0.1) - player->planeY * sin(-0.1);
-    	player->planeY = oldPlaneX * sin(-0.1) + player->planeY * cos(-0.1);
+		player->pdx = player->pdx * cos(-0.1) - player->pdy * sin(-0.1);
+		player->pdy = old_dir_x * sin(-0.1) + player->pdy * cos(-0.1);
+		player->plane_x = player->plane_x * cos(-0.1) - player->plane_y * sin(-0.1);
+		player->plane_y = old_plane_x * sin(-0.1) + player->plane_y * cos(-0.1);
 	}
-	printf("pdx = %f\n", player->pdx);
-	printf("pdy = %f\n", player->pdy);
-//	printf("pa = %f\n", data->player.pa);
 }
 
 static int	key_hook(int keycode, t_data *data)

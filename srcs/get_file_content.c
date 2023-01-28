@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:34:05 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/19 17:27:01 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:14:42 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,8 @@ int	filled_file_content(char *line, t_parse *parse)
 
 int	check_line(char *line, t_parse *parse)
 {
-	int check;
-	
+	int	check;
+
 	check = fill_param(line, parse);
 	if (parse->filled < 6)
 	{
@@ -204,8 +204,9 @@ void	get_file_content(char *filename, t_parse *parse)
 {
 	char	*line;
 	int		fd;
-	int	check = 0;
-	
+	int		check;
+
+	check = 0;
 	init_parse_struct(parse);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)

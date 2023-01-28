@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chjoie <chjoie@student.42angouleme.fr      +#+  +:+       +#+        */
+/*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 14:38:25 by chjoie            #+#    #+#             */
-/*   Updated: 2023/01/18 19:02:05 by chjoie           ###   ########.fr       */
+/*   Updated: 2023/01/28 14:13:06 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	surrounded(char **map, int i, int j)
 	return (TRUE);
 }
 
-int check_arround(char **map, int i, int j)
+int	check_arround(char **map, int i, int j)
 {
 	if (i == 0 || j == 0)
 		return (FALSE);
@@ -104,7 +104,6 @@ int	check_valid_map(char **map, char *position)
 	error = 1;
 	player = 0;
 	i = 0;
-	
 	while (map[i])
 	{
 		if (!check_items(map[i], &player, position))

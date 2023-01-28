@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 22:08:37 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/19 17:24:33 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:13:21 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static void	check_extension(char *argv)
 		ft_putendl_fd("Wrong map extension !", 2);
 		exit(1);
 	}
-
 }
 
 void	check_errors(int argc, char **argv)

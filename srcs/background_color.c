@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:06:59 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/19 11:32:28 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:05:57 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	filled_color(char *name, t_parse *parse, char **color)
 			i++;
 		}
 	}
-	else if (!ft_strncmp(name, "c", 2))
+	if (!ft_strncmp(name, "C", 2))
 		if (!filled_c(parse, color))
 			return (FALSE);
 	return (TRUE);

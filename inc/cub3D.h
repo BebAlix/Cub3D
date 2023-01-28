@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/20 13:23:18 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:37:16 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define WIDTH 800
-# define HEIGHT 600
+# define WIDTH 1280
+# define HEIGHT 720
 
-# define BLUE 0x87CEEB
+# define BLUE 8900331
 # define BROWN 0xBC8F8F
 # define GREY 0xD3D3D3
 # define WHITE 0xFFFFF0
@@ -42,6 +42,8 @@ typedef struct s_parse
 	char	*west_texture;
 	int		f[3];
 	int		c[3];
+	int		ceil;
+	int		floor;
 	int		filled;
 	char	player_position;
 	char	**map;
@@ -56,27 +58,46 @@ typedef struct s_pixel
 	int		endian;
 }				t_pixel;
 
+typedef struct s_ray
+{
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	perp_wall_dist;
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
+	int		hit;
+	int		side;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+}				t_ray;
+
 typedef struct s_player
 {
 	double	x;
 	double	y;
 	double	pdx;
 	double	pdy;
-	double	planeX;
-	double	planeY;
-	double	rayDirX;
-	double	rayDirY;
+	double	plane_x;
+	double	plane_y;
+	double	ray_dir_x;
+	double	ray_dir_y;
 	double	pa;
-	double	cameraX;
+	double	camera_x;
 }				t_player;
 
 typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
-	t_pixel	pixel;
-	t_parse	parse;
+	t_pixel		pixel;
+	t_parse		parse;
 	t_player	player;
+	t_ray		ray;
 }				t_data;
 
 void	init_vars(t_data *data);
@@ -85,16 +106,14 @@ int		close_win(t_data *data);
 void	ft_error(t_data *data);
 
 void	check_errors(int argc, char **argv);
-int	check_valid_map(char **map, char *position);
+int		check_valid_map(char **map, char *position);
 void	parsing(char *filename, t_parse *parse);
 void	get_file_content(char *filename, t_parse *parse);
 int		background_color(char **tab, t_parse *parse);
 void	error_msg(char *str);
 
-void	set_background(t_pixel *pixel);
 void	print_map(t_pixel pixel, t_parse *parse);
 void	print_player(t_pixel pixel, t_player *player, double x, double y, int color);
-void	print_zigouigoui(t_pixel pixel, t_player *player, double x, double y, int color);
 void	display_map(t_data *data, t_pixel *pixel, char **map);
 
 void	free_double_char(char **str);

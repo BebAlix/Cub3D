@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 22:26:08 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/27 17:45:22 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:21:14 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,41 +21,18 @@ void	my_mlx_pixel_put(t_pixel *pixel, int x, int y, int color)
 	*(unsigned int *) dst = color;
 }
 
-void	draw_vertical_line(t_pixel *pixel, int x, int drawStart, int drawEnd, int color)
-{
-	int	i;
-	
-	i = drawStart;
-	while (i < drawEnd)
-	{
-		my_mlx_pixel_put(pixel, x , i, color);
-		i++;
-	}
-}
-
-
-void	set_background(t_pixel *pixel)
+void	draw_ceil(t_pixel *pixel, int ceil)
 {
 	int	y;
 	int	x;
 	int	middle;
 
-	x = 0.0;
-	y = 0.0;
-	middle = HEIGHT / 2.0;
+	x = 0;
+	y = 0;
+	middle = HEIGHT / 2;
 	while (y < middle)
 	{
-		my_mlx_pixel_put(pixel, x, y, BLUE);
-		if (x == WIDTH)
-		{
-			x = 0.0;
-			y++;
-		}
-		x++;
-	}
-	while (y < HEIGHT)
-	{
-		my_mlx_pixel_put(pixel, x, y, BROWN);
+		my_mlx_pixel_put(pixel, x, y, ceil);
 		if (x == WIDTH)
 		{
 			x = 0.0;
@@ -65,116 +42,121 @@ void	set_background(t_pixel *pixel)
 	}
 }
 
-void	raycasting(t_pixel *pixel, t_player *player, char **map)
+void	draw_floor(t_pixel *pixel, int floor)
 {
-	(void) pixel;
-	(void) player;
-	(void) map;
-	
+	int	y;
 	int	x;
-	int	mapX;
-	int	mapY;
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	perpWallDist;
-	int	stepX;
-	int	stepY;
-	int	hit;
-	int	side;
-	int	lineHeight;
-	int	drawStart;
-	int	drawEnd;
-	
+
+	x = 0;
+	y = HEIGHT / 2;
+	while (y < HEIGHT)
+	{
+		my_mlx_pixel_put(pixel, x, y, floor);
+		if (x == WIDTH)
+		{
+			x = 0;
+			y++;
+		}
+		x++;
+	}
+}
+
+void	draw_vertical_line(t_pixel *pixel, int x, int draw_start, int draw_end, int color)
+{
+	int	i;
+
+	i = draw_start;
+	while (i < draw_end)
+	{
+		my_mlx_pixel_put(pixel, x, i, color);
+		i++;
+	}
+}
+
+void	raycasting(t_ray *ray, t_pixel *pixel, t_player *player, char **map)
+{
+	int	x;
+
 	x = 0;
 	while (x < WIDTH)
 	{
-		player->cameraX = (2 * x) / (double) WIDTH - 1;
-		player->rayDirX = player->pdx + player->planeX * player->cameraX;
-		player->rayDirY = player->pdy + player->planeY * player->cameraX;
-		
-		
-		// printf("player->rayDirX = %f\n", player->rayDirX);
-		// printf("player->rayDirY = %f\n", player->rayDirY);
-		// printf("player->cameraX = %f\n",player->cameraX);
-		printf("player->pdx = %f\n",player->pdx);
-		printf("player->pdy = %f\n",player->pdy);
-		printf("player->x = %f\n",player->x);
-		printf("player->y = %f\n",player->y);
-		printf("player->planex = %f\n",player->planeX);
-		printf("player->planey = %f\n",player->planeY);
-		
-		
-		mapX = (int) player->x;
-		mapY = (int) player->y;
-		
-		if (player->rayDirX == 0)
-			deltaDistX = 1000;
-		else if (player->rayDirX != 0)
-			deltaDistX = fabs(1 / player->rayDirX);
-		if (player->rayDirY == 0)
-			deltaDistY = 1000;
-		else if (player->rayDirY != 0)
-			deltaDistY = fabs(1 / player->rayDirY);
-		if (player->rayDirX < 0)
+		player->camera_x = (2 * x) / (double) WIDTH - 1;
+		player->ray_dir_x = player->pdx + player->plane_x * player->camera_x;
+		player->ray_dir_y = player->pdy + player->plane_y * player->camera_x;
+		ray->map_x = (int) player->x;
+		ray->map_y = (int) player->y;
+		if (player->ray_dir_x == 0)
+			ray->delta_dist_x = 1000;
+		else if (player->ray_dir_x != 0)
+			ray->delta_dist_x = fabs(1 / player->ray_dir_x);
+		if (player->ray_dir_y == 0)
+			ray->delta_dist_y = 1000;
+		else if (player->ray_dir_y != 0)
+			ray->delta_dist_y = fabs(1 / player->ray_dir_y);
+		if (player->ray_dir_x < 0)
 		{
-			stepX = -1;
-			sideDistX = (player->x - mapX) * deltaDistX;
+			ray->step_x = -1;
+			ray->side_dist_x = (player->x - ray->map_x) * ray->delta_dist_x;
 		}
 		else
 		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - player->x) * deltaDistX;
+			ray->step_x = 1;
+			ray->side_dist_x = (ray->map_x + 1.0 - player->x) * ray->delta_dist_x;
 		}
-		if (player->rayDirY < 0)
+		if (player->ray_dir_y < 0)
 		{
-			stepY = -1;
-			sideDistY = (player->y - mapY) * deltaDistY;
+			ray->step_y = -1;
+			ray->side_dist_y = (player->y - ray->map_y) * ray->delta_dist_y;
 		}
 		else
 		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - player->y) * deltaDistY;
+			ray->step_y = 1;
+			ray->side_dist_y = (ray->map_y + 1.0 - player->y) * ray->delta_dist_y;
 		}
-		hit = 0;
-		while (hit == 0)
+		ray->hit = 0;
+		while (ray->hit == 0)
 		{
-			if (sideDistX < sideDistY)
+			if (ray->side_dist_x < ray->side_dist_y)
 			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
+				ray->side_dist_x += ray->delta_dist_x;
+				ray->map_x += ray->step_x;
+				ray->side = 0;
 			}
 			else
 			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
+				ray->side_dist_y += ray->delta_dist_y;
+				ray->map_y += ray->step_y;
+				ray->side = 1;
 			}
-			if (side == 0)
-				perpWallDist = (sideDistX - deltaDistX);
+			if (ray->side == 0)
+				ray->perp_wall_dist = (ray->side_dist_x - ray->delta_dist_x);
 			else
-				perpWallDist = (sideDistY - deltaDistY);
-			if (map[mapY][mapX] == '1')
-				hit = 1;
+				ray->perp_wall_dist = (ray->side_dist_y - ray->delta_dist_y);
+			if (map[ray->map_y][ray->map_x] == '1')
+				ray->hit = 1;
 		}
-		lineHeight = (int) (HEIGHT / perpWallDist);
-		drawStart = -lineHeight / 2 + HEIGHT / 2;
-		if (drawStart < 0)
-			drawStart = 0;
-		drawEnd = lineHeight / 2 + HEIGHT / 2;
-		if (drawEnd >= HEIGHT)
-			drawEnd = HEIGHT - 1;
-		draw_vertical_line(pixel, x, drawStart, drawEnd, RED);
+		ray->line_height = (int)(HEIGHT / ray->perp_wall_dist);
+		ray->draw_start = -ray->line_height / 2 + HEIGHT / 2;
+		if (ray->draw_start < 0)
+			ray->draw_start = 0;
+		ray->draw_end = ray->line_height / 2 + HEIGHT / 2;
+		if (ray->draw_end >= HEIGHT)
+			ray->draw_end = HEIGHT - 1;
+		draw_vertical_line(pixel, x, ray->draw_start, ray->draw_end, RED);
 		x++;
 	}
+	printf("player->pdx = %f\n", player->pdx);
+	printf("player->pdy = %f\n", player->pdy);
+	printf("player->x = %f\n", player->x);
+	printf("player->y = %f\n", player->y);
+	printf("player->plane_x = %f\n", player->plane_x);
+	printf("player->plane_y = %f\n", player->plane_y);
 }
 
 void	display_map(t_data *data, t_pixel *pixel, char **map)
 {
-	(void) map;
-	set_background(pixel);
-	raycasting(pixel, &data->player, map);
+	draw_ceil(pixel, data->parse.ceil);
+	draw_floor(pixel, data->parse.floor);
+	raycasting(&data->ray, pixel, &data->player, map);
 	mlx_put_image_to_window(data->mlx, data->win, data->pixel.img, 0, 0);
 }
