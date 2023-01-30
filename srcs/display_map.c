@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 22:26:08 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/28 14:21:14 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:14:49 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,18 +146,54 @@ void	raycasting(t_ray *ray, t_pixel *pixel, t_player *player, char **map)
 		draw_vertical_line(pixel, x, ray->draw_start, ray->draw_end, RED);
 		x++;
 	}
-	printf("player->pdx = %f\n", player->pdx);
+
+	/*printf("player->pdx = %f\n", player->pdx);
 	printf("player->pdy = %f\n", player->pdy);
 	printf("player->x = %f\n", player->x);
 	printf("player->y = %f\n", player->y);
 	printf("player->plane_x = %f\n", player->plane_x);
-	printf("player->plane_y = %f\n", player->plane_y);
+	printf("player->plane_y = %f\n", player->plane_y);*/
 }
 
 void	display_map(t_data *data, t_pixel *pixel, char **map)
 {
-	draw_ceil(pixel, data->parse.ceil);
-	draw_floor(pixel, data->parse.floor);
+	draw_ceil(pixel, data->info.ceil);
+	draw_floor(pixel, data->info.floor);
 	raycasting(&data->ray, pixel, &data->player, map);
 	mlx_put_image_to_window(data->mlx, data->win, data->pixel.img, 0, 0);
 }
+
+/*
+int    ft_recup_rgb_pixel(t_pixel *tex_infos, t_texture *tex, int pix_x, int pix_y)
+{
+    unsigned char    r;
+    unsigned char    g;
+    unsigned char    b;
+    double            pixel_bit;
+
+    tex_infos->addr = mlx_get_data_addr(tex->img, &tex_infos->bits_per_pixel,
+            &tex_infos->line_length, &tex_infos->endian);
+    pixel_bit = (pix_x * 4) + (tex->h * 4 * pix_y);
+    if (pixel_bit < 0)
+        return (rend->crgb);
+    b = tex_infos->addr[(pix_x * 4) + (tex->h * 4 * pix_y)];
+    g = tex_infos->addr[(pix_x * 4) + (tex->h * 4 * pix_y + 1)];
+    r = tex_infos->addr[(pix_x * 4) + (tex->h * 4 * pix_y + 2)];
+    return (rgb_to_int(r, g, b));
+}
+
+t_texture	side_wall(t_info *info, t_ray *ray, t_player *player)
+{
+
+	t_texture  tex;
+
+	if (ray->side == 0 && player->ray_dir_x < 0)
+		tex = info->n_tex;
+	else if (ray->side == 0 && player->ray_dir_x > 0)
+		tex = info->s_tex;
+	else if (ray->side == 1 && player->ray_dir_y < 0)
+		tex = info->e_tex;
+	else if (ray->side == 1 && player->ray_dir_y > 0)
+		tex = info->w_tex;
+	return (tex);
+}*/

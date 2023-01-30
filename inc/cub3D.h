@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/28 14:37:16 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/30 19:34:39 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,28 @@ typedef struct s_parse
 	char	*west_texture;
 	int		f[3];
 	int		c[3];
-	int		ceil;
-	int		floor;
+	char	**map;
 	int		filled;
 	char	player_position;
-	char	**map;
 }				t_parse;
+
+typedef struct s_texture
+{
+	void	*img;
+	int		w;
+	int		h;
+}				t_texture;
+
+typedef struct s_info
+{
+	t_texture	n_tex;
+	t_texture	s_tex;
+	t_texture	e_tex;
+	t_texture	w_tex;
+	char		**map;
+	int			ceil;
+	int			floor;
+}				t_info;
 
 typedef struct s_pixel
 {
@@ -86,8 +102,8 @@ typedef struct s_player
 	double	plane_y;
 	double	ray_dir_x;
 	double	ray_dir_y;
-	double	pa;
 	double	camera_x;
+	double	pa;
 }				t_player;
 
 typedef struct s_data
@@ -98,6 +114,7 @@ typedef struct s_data
 	t_parse		parse;
 	t_player	player;
 	t_ray		ray;
+	t_info		info;
 }				t_data;
 
 void	init_vars(t_data *data);
@@ -105,6 +122,7 @@ void	play(t_data *data);
 int		close_win(t_data *data);
 void	ft_error(t_data *data);
 
+int		rgb_to_int(int red, int green, int blue);
 void	check_errors(int argc, char **argv);
 int		check_valid_map(char **map, char *position);
 void	parsing(char *filename, t_parse *parse);
