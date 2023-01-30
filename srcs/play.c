@@ -16,30 +16,30 @@ void	move_player(t_data *data, char move)
 {
 	if (move == 'w')
 	{
-		if (data->parse.map[(int)(data->player.y - 1)][(int)(data->player.x - 1 + data->player.pdx * 0.1)] != '1')
+		if (data->parse.map[(int)(data->player.y)][(int)(data->player.x + data->player.pdx * 0.1)] != '1')
 			data->player.x += data->player.pdx * 0.1;
-		if (data->parse.map[(int)(data->player.y - 1 + data->player.pdy * 0.1)][(int)(data->player.x - 1)] != '1')
+		if (data->parse.map[(int)(data->player.y + data->player.pdy * 0.1)][(int)(data->player.x)] != '1')
 			data->player.y += data->player.pdy * 0.1;
 	}
 	if (move == 's')
 	{
-		if (data->parse.map[(int)(data->player.y + 1)][(int)(data->player.x + 1 - data->player.pdx * 0.1)] != '1')
+		if (data->parse.map[(int)(data->player.y)][(int)(data->player.x - data->player.pdx * 0.1)] != '1')
 			data->player.x -= data->player.pdx * 0.1;
-		if (data->parse.map[(int)(data->player.y + 1 - data->player.pdy * 0.1)][(int)(data->player.x + 1)] != '1')
+		if (data->parse.map[(int)(data->player.y - data->player.pdy * 0.1)][(int)(data->player.x)] != '1')
 			data->player.y -= data->player.pdy * 0.1;
 	}
 	if (move == 'd')
 	{
-		if (data->parse.map[(int)(data->player.y + 0.2)][(int)(data->player.x + 0.2 + data->player.plane_x * 0.1)] != '1')
+		if (data->parse.map[(int)(data->player.y)][(int)(data->player.x + data->player.plane_x * 0.1)] != '1')
 			data->player.x += data->player.plane_x * 0.1;
-		if (data->parse.map[(int)(data->player.y + 0.2 + data->player.plane_y * 0.1)][(int)(data->player.x + 0.2)] != '1')
+		if (data->parse.map[(int)(data->player.y + data->player.plane_y * 0.1)][(int)(data->player.x)] != '1')
 			data->player.y += data->player.plane_y * 0.1;
 	}
 	if (move == 'a')
 	{
-		if (data->parse.map[(int)(data->player.y - 0.2)][(int)(data->player.x - 0.2 - data->player.plane_x * 0.1)] != '1')
+		if (data->parse.map[(int)(data->player.y)][(int)(data->player.x - data->player.plane_x * 0.1)] != '1')
 			data->player.x -= data->player.plane_x * 0.1;
-		if (data->parse.map[(int)(data->player.y - 0.2 - data->player.plane_y * 0.1)][(int)(data->player.x - 0.2)] != '1')
+		if (data->parse.map[(int)(data->player.y - data->player.plane_y * 0.1)][(int)(data->player.x)] != '1')
 			data->player.y -= data->player.plane_y * 0.1;
 	}
 }

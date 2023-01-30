@@ -59,6 +59,7 @@ void	draw_floor(t_pixel *pixel, int floor)
 		}
 		x++;
 	}
+	
 }
 
 void	draw_vertical_line(t_pixel *pixel, int x, int draw_start, int draw_end, int color)
@@ -66,7 +67,7 @@ void	draw_vertical_line(t_pixel *pixel, int x, int draw_start, int draw_end, int
 	int	i;
 
 	i = draw_start;
-	while (i < draw_end)
+	while (i <= draw_end)
 	{
 		my_mlx_pixel_put(pixel, x, i, color);
 		i++;
