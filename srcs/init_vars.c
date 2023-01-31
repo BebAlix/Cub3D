@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 14:26:39 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/31 18:10:46 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/31 19:16:03 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,37 @@ void	init_player_position(t_player *player, char **map, char orientation)
 		}
 		y++;
 	}
-	player->pdx = -1;
-	player->pdy = 0;
-	player->plane_x = 0;
-	player->plane_y = 0.66;
+	if (orientation == 'N')
+	{
+		player->pdx = -1;
+		player->pdy = 0;
+		player->plane_x = 0;
+		player->plane_y = 0.66;
+	}
+
+	if (orientation == 'W')
+	{
+		player->pdx = 0;
+		player->pdy = 1;
+		player->plane_x = 0.66;
+		player->plane_y = 0;
+	}
+
+	if (orientation == 'S')
+	{
+		player->pdx = 1;
+		player->pdy = 0;
+		player->plane_x = 0;
+		player->plane_y = -0.66;
+	}
+
+	if (orientation == 'E')
+	{
+		player->pdx = 0;
+		player->pdy = -1;
+		player->plane_x = -0.66;
+		player->plane_y = 0;
+	}
 /*	
 	printf("orientation = %c\n", orientation);
 	if (orientation == 'S')
