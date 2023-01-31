@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/30 19:34:39 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/31 18:05:11 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,15 @@
 # define TRUE 1
 # define FALSE 0
 
+typedef struct s_pixel
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_pixel;
+
 typedef struct s_parse
 {
 	char	*file_content;
@@ -49,7 +58,7 @@ typedef struct s_parse
 
 typedef struct s_texture
 {
-	void	*img;
+	t_pixel		tex_info;
 	int		w;
 	int		h;
 }				t_texture;
@@ -65,14 +74,6 @@ typedef struct s_info
 	int			floor;
 }				t_info;
 
-typedef struct s_pixel
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_pixel;
 
 typedef struct s_ray
 {
@@ -132,7 +133,7 @@ void	error_msg(char *str);
 
 void	print_map(t_pixel pixel, t_parse *parse);
 void	print_player(t_pixel pixel, t_player *player, double x, double y, int color);
-void	display_map(t_data *data, t_pixel *pixel, char **map);
+void	display_map(t_data *data, t_pixel *pixel, t_info *info);
 
 void	free_double_char(char **str);
 void	free_parse_struct(t_parse *parse);

@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 14:26:39 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/30 19:21:34 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/31 18:10:46 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,18 @@ int	rgb_to_int(int red, int green, int blue)
 
 void	init_info(t_parse parse, t_info *info, void *mlx)
 {
-	info->n_tex.img = mlx_xpm_file_to_image(mlx, parse.north_texture, &info->n_tex.w, &info->n_tex.h);
-	info->s_tex.img = mlx_xpm_file_to_image(mlx, parse.north_texture, &info->s_tex.w, &info->s_tex.h);
-	info->e_tex.img = mlx_xpm_file_to_image(mlx, parse.north_texture, &info->e_tex.w, &info->e_tex.h);
-	info->w_tex.img = mlx_xpm_file_to_image(mlx, parse.north_texture, &info->w_tex.w, &info->w_tex.h);
+	info->n_tex.tex_info.img = mlx_xpm_file_to_image(mlx, parse.north_texture, &info->n_tex.w, &info->n_tex.h);
+	info->s_tex.tex_info.img = mlx_xpm_file_to_image(mlx, parse.south_texture, &info->s_tex.w, &info->s_tex.h);
+	info->e_tex.tex_info.img = mlx_xpm_file_to_image(mlx, parse.east_texture, &info->e_tex.w, &info->e_tex.h);
+	info->w_tex.tex_info.img = mlx_xpm_file_to_image(mlx, parse.west_texture, &info->w_tex.w, &info->w_tex.h);
+	info->n_tex.tex_info.addr = mlx_get_data_addr(info->n_tex.tex_info.img, &info->n_tex.tex_info.bits_per_pixel,
+			&info->n_tex.tex_info.line_length, &info->n_tex.tex_info.endian);
+	info->s_tex.tex_info.addr = mlx_get_data_addr(info->s_tex.tex_info.img, &info->s_tex.tex_info.bits_per_pixel,
+			&info->s_tex.tex_info.line_length, &info->s_tex.tex_info.endian);
+	info->e_tex.tex_info.addr = mlx_get_data_addr(info->e_tex.tex_info.img, &info->e_tex.tex_info.bits_per_pixel,
+			&info->e_tex.tex_info.line_length, &info->e_tex.tex_info.endian);
+	info->w_tex.tex_info.addr = mlx_get_data_addr(info->w_tex.tex_info.img, &info->w_tex.tex_info.bits_per_pixel,
+			&info->w_tex.tex_info.line_length, &info->w_tex.tex_info.endian);
 	info->map = parse.map;
 	info->floor = rgb_to_int(parse.f[0], parse.f[1], parse.f[2]);
 	info->ceil = rgb_to_int(parse.c[0], parse.c[1], parse.c[2]);

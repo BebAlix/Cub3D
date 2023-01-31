@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:16:19 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/28 14:29:33 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/31 14:59:35 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	check_errors(argc, argv);
 	parsing(argv[1], &data.parse);
 	init_vars(&data);
-	display_map(&data, &data.pixel, data.parse.map);
+	display_map(&data, &data.pixel, &data.info);
 	play(&data);
 	return (0);
 }

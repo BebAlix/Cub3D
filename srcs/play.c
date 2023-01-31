@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 22:34:42 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/28 14:05:23 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/31 15:51:17 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ void	move_player(t_data *data, char move)
 		if (data->parse.map[(int)(data->player.y - data->player.plane_y * 0.1)][(int)(data->player.x)] != '1')
 			data->player.y -= data->player.plane_y * 0.1;
 	}
+	display_map(data, &data->pixel, &data->info);
 }
 
-void	rotate_player(t_player *player, char move)
+void	rotate_player(t_data *data, t_player *player, char move)
 {
 	double	old_dir_x;
 	double	old_plane_x;
@@ -65,6 +66,7 @@ void	rotate_player(t_player *player, char move)
 		player->plane_x = player->plane_x * cos(-0.1) - player->plane_y * sin(-0.1);
 		player->plane_y = old_plane_x * sin(-0.1) + player->plane_y * cos(-0.1);
 	}
+	display_map(data, &data->pixel, &data->info);
 }
 
 static int	key_hook(int keycode, t_data *data)
@@ -80,10 +82,9 @@ static int	key_hook(int keycode, t_data *data)
 	if (keycode == XK_d)
 		move_player(data, 'd');
 	if (keycode == XK_Right)
-		rotate_player(&data->player, 'r');
+		rotate_player(data, &data->player, 'r');
 	if (keycode == XK_Left)
-		rotate_player(&data->player, 'l');
-	display_map(data, &data->pixel, data->parse.map);
+		rotate_player(data, &data->player, 'l');
 	return (0);
 }
 
