@@ -5,95 +5,100 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/18 22:34:42 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/31 19:17:56 by equesnel         ###   ########.fr       */
+/*   Created: 2023/01/31 20:06:19 by equesnel          #+#    #+#             */
+/*   Updated: 2023/01/31 22:43:43 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	move_player(t_data *data, char move)
+void	move_player_n_s(t_player *p, char **map, char move)
 {
 	if (move == 'w')
 	{
-		if (data->parse.map[(int)(data->player.y)][(int)(data->player.x + data->player.pdx * 0.1)] != '1')
-			data->player.x += data->player.pdx * 0.1;
-		if (data->parse.map[(int)(data->player.y + data->player.pdy * 0.1)][(int)(data->player.x)] != '1')
-			data->player.y += data->player.pdy * 0.1;
+		if (map[(int)(p->y)][(int)(p->x + p->pdx * SPEED)] != '1')
+			p->x += p->pdx * SPEED;
+		if (map[(int)(p->y + p->pdy * SPEED)][(int)(p->x)] != '1')
+			p->y += p->pdy * SPEED;
 	}
 	if (move == 's')
 	{
-		if (data->parse.map[(int)(data->player.y)][(int)(data->player.x - data->player.pdx * 0.1)] != '1')
-			data->player.x -= data->player.pdx * 0.1;
-		if (data->parse.map[(int)(data->player.y - data->player.pdy * 0.1)][(int)(data->player.x)] != '1')
-			data->player.y -= data->player.pdy * 0.1;
+		if (map[(int)(p->y)][(int)(p->x - p->pdx * SPEED)] != '1')
+			p->x -= p->pdx * SPEED;
+		if (map[(int)(p->y - p->pdy * SPEED)][(int)(p->x)] != '1')
+			p->y -= p->pdy * SPEED;
 	}
+}
+
+void	move_player_e_w(t_player *p, char **map, char move)
+{
 	if (move == 'd')
 	{
-		if (data->parse.map[(int)(data->player.y)][(int)(data->player.x + data->player.plane_x * 0.1)] != '1')
-			data->player.x += data->player.plane_x * 0.1;
-		if (data->parse.map[(int)(data->player.y + data->player.plane_y * 0.1)][(int)(data->player.x)] != '1')
-			data->player.y += data->player.plane_y * 0.1;
+		if (map[(int)(p->y)][(int)(p->x + p->plane_x * SPEED)] != '1')
+			p->x += p->plane_x * SPEED;
+		if (map[(int)(p->y + p->plane_y * SPEED)][(int)(p->x)] != '1')
+			p->y += p->plane_y * SPEED;
 	}
 	if (move == 'a')
 	{
-		if (data->parse.map[(int)(data->player.y)][(int)(data->player.x - data->player.plane_x * 0.1)] != '1')
-			data->player.x -= data->player.plane_x * 0.1;
-		if (data->parse.map[(int)(data->player.y - data->player.plane_y * 0.1)][(int)(data->player.x)] != '1')
-			data->player.y -= data->player.plane_y * 0.1;
+		if (map[(int)(p->y)][(int)(p->x - p->plane_x * SPEED)] != '1')
+			p->x -= p->plane_x * SPEED;
+		if (map[(int)(p->y - p->plane_y * SPEED)][(int)(p->x)] != '1')
+			p->y -= p->plane_y * SPEED;
 	}
-	display_map(data, &data->pixel, &data->info);
 }
 
-void	rotate_player(t_data *data, t_player *player, char move)
+void	rotate_player(t_player *p, char move)
 {
 	double	old_dir_x;
 	double	old_plane_x;
+	double	speed;
 
-	old_dir_x = player->pdx;
-	old_plane_x = player->plane_x;
+	speed = SPEED / 2;
+	old_dir_x = p->pdx;
+	old_plane_x = p->plane_x;
 	if (move == 'l')
 	{
-		player->pdx = player->pdx * cos(0.1) - player->pdy * sin(0.1);
-		player->pdy = old_dir_x * sin(0.1) + player->pdy * cos(0.1);
-		player->plane_x = player->plane_x * cos(0.1) - player->plane_y * sin(0.1);
-		player->plane_y = old_plane_x * sin(0.1) + player->plane_y * cos(0.1);
+		p->pdx = p->pdx * cos(speed) - p->pdy * sin(speed);
+		p->pdy = old_dir_x * sin(speed) + p->pdy * cos(speed);
+		p->plane_x = p->plane_x * cos(speed) - p->plane_y * sin(speed);
+		p->plane_y = old_plane_x * sin(speed) + p->plane_y * cos(speed);
 	}
 	if (move == 'r')
 	{
-		player->pdx = player->pdx * cos(-0.1) - player->pdy * sin(-0.1);
-		player->pdy = old_dir_x * sin(-0.1) + player->pdy * cos(-0.1);
-		player->plane_x = player->plane_x * cos(-0.1) - player->plane_y * sin(-0.1);
-		player->plane_y = old_plane_x * sin(-0.1) + player->plane_y * cos(-0.1);
+		p->pdx = p->pdx * cos(-speed) - p->pdy * sin(-speed);
+		p->pdy = old_dir_x * sin(-speed) + p->pdy * cos(-speed);
+		p->plane_x = p->plane_x * cos(-speed) - p->plane_y * sin(-speed);
+		p->plane_y = old_plane_x * sin(-speed) + p->plane_y * cos(-speed);
 	}
-	display_map(data, &data->pixel, &data->info);
 }
 
 static int	key_hook(int keycode, t_data *data)
 {
 	if (keycode == XK_Escape)
 		close_win(data);
-	if (keycode == XK_w)
-		move_player(data, 'w');
-	if (keycode == XK_s)
-		move_player(data, 's');
-	if (keycode == XK_a)
-		move_player(data, 'a');
-	if (keycode == XK_d)
-		move_player(data, 'd');
-	if (keycode == XK_Right)
-		rotate_player(data, &data->player, 'r');
-	if (keycode == XK_Left)
-		rotate_player(data, &data->player, 'l');
+	else if (keycode == XK_w)
+		move_player_n_s(&data->player, data->info.map, 'w');
+	else if (keycode == XK_s)
+		move_player_n_s(&data->player, data->info.map, 's');
+	else if (keycode == XK_a)
+		move_player_e_w(&data->player, data->info.map, 'a');
+	else if (keycode == XK_d)
+		move_player_e_w(&data->player, data->info.map, 'd');
+	else if (keycode == XK_Right)
+		rotate_player(&data->player, 'r');
+	else if (keycode == XK_Left)
+		rotate_player(&data->player, 'l');
+	else
+		return (0);
+	display_map(data, &data->pixel, &data->info);
 	return (0);
 }
 
 void	play(t_data *data)
 {
-	printf("pdx = %f\n", data->player.pdx);
-	printf("pdy = %f\n", data->player.pdy);
-	//printf("pa = %f\n", data->player.pa);
 	mlx_hook(data->win, 2, 1L << 0, key_hook, data);
 	mlx_hook(data->win, 17, 0, close_win, data);
+	ft_mouse(data); // bonus
 	mlx_loop(data->mlx);
 }

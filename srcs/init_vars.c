@@ -6,11 +6,48 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 14:26:39 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/31 19:16:03 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/31 23:45:40 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	init_orientation_n_s(t_player *player, char orientation)
+{
+	if (orientation == 'N')
+	{
+		player->pdx = -1;
+		player->pdy = 0;
+		player->plane_x = 0;
+		player->plane_y = 0.66;
+	}
+	if (orientation == 'S')
+	{
+		player->pdx = 1;
+		player->pdy = 0;
+		player->plane_x = 0;
+		player->plane_y = -0.66;
+	}
+	
+}
+
+void	init_orientation_e_w(t_player *player, char orientation)
+{
+	if (orientation == 'E')
+	{
+		player->pdx = 0;
+		player->pdy = -1;
+		player->plane_x = -0.66;
+		player->plane_y = 0;
+	}
+	if (orientation == 'W')
+	{
+		player->pdx = 0;
+		player->pdy = 1;
+		player->plane_x = 0.66;
+		player->plane_y = 0;
+	}
+}
 
 void	init_player_position(t_player *player, char **map, char orientation)
 {
@@ -32,50 +69,9 @@ void	init_player_position(t_player *player, char **map, char orientation)
 		}
 		y++;
 	}
-	if (orientation == 'N')
-	{
-		player->pdx = -1;
-		player->pdy = 0;
-		player->plane_x = 0;
-		player->plane_y = 0.66;
-	}
-
-	if (orientation == 'W')
-	{
-		player->pdx = 0;
-		player->pdy = 1;
-		player->plane_x = 0.66;
-		player->plane_y = 0;
-	}
-
-	if (orientation == 'S')
-	{
-		player->pdx = 1;
-		player->pdy = 0;
-		player->plane_x = 0;
-		player->plane_y = -0.66;
-	}
-
-	if (orientation == 'E')
-	{
-		player->pdx = 0;
-		player->pdy = -1;
-		player->plane_x = -0.66;
-		player->plane_y = 0;
-	}
-/*	
-	printf("orientation = %c\n", orientation);
-	if (orientation == 'S')
-		player->pa = M_PI / 2.0;
-	if (orientation == 'N')
-		player->pa = (M_PI * 3.0) / 2.0;
-	if (orientation == 'E')
-		player->pa = M_PI * 2.0;
-	if (orientation == 'W')
-		player->pa = M_PI;*/
-	//player->pdx = cos(player->pa) * 0.1;
-	//player->pdy = sin(player->pa) * 0.1;
-	//player->camera = 0.33;
+	init_orientation_n_s(player, orientation);
+	init_orientation_e_w(player, orientation);
+	
 }
 
 int	rgb_to_int(int red, int green, int blue)

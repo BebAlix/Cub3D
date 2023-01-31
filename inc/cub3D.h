@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/31 18:05:11 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/01/31 22:28:26 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,7 @@
 
 # define WIDTH 1280
 # define HEIGHT 720
-
-# define BLUE 8900331
-# define BROWN 0xBC8F8F
-# define GREY 0xD3D3D3
-# define WHITE 0xFFFFF0
-# define RED 0xB22222
+# define SPEED 0.1
 
 # define TRUE 1
 # define FALSE 0
@@ -86,7 +81,6 @@ typedef struct s_ray
 	int		map_y;
 	int		step_x;
 	int		step_y;
-	int		hit;
 	int		side;
 	int		line_height;
 	int		draw_start;
@@ -137,5 +131,8 @@ void	display_map(t_data *data, t_pixel *pixel, t_info *info);
 
 void	free_double_char(char **str);
 void	free_parse_struct(t_parse *parse);
+
+//bonus
+void    ft_mouse(t_data *data);
 
 #endif
