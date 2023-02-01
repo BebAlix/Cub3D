@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 22:26:08 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/01 15:45:00 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/01 16:24:46 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static void	draw_floor(t_pixel *pixel, int floor)
 		}
 		x++;
 	}
-	
 }
 
 void	display_map(t_data *data, t_pixel *pixel, t_info *info)
@@ -69,5 +68,3 @@ void	display_map(t_data *data, t_pixel *pixel, t_info *info)
 	raycasting(&data->ray, pixel, &data->player, info);
 	mlx_put_image_to_window(data->mlx, data->win, data->pixel.img, 0, 0);
 }
-
-
