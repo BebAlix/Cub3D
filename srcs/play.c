@@ -99,6 +99,6 @@ void	play(t_data *data)
 {
 	mlx_hook(data->win, 2, 1L << 0, key_hook, data);
 	mlx_hook(data->win, 17, 0, close_win, data);
-	ft_mouse(data); // bonus
+	//ft_mouse(data); // bonus
 	mlx_loop(data->mlx);
 }

@@ -20,7 +20,7 @@ void	rotate_player_mouse(t_player *p, char move)
 
 	old_dir_x = p->pdx;
 	old_plane_x = p->plane_x;
-	speed = SPEED / 5;
+	speed = SPEED / 7;
 	if (move == 'l')
 	{
 		p->pdx = p->pdx * cos(speed) - p->pdy * sin(speed);

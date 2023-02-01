@@ -194,10 +194,47 @@ char	*go_to_map(int fd, char *line, t_parse *parse)
 	{
 		free(line);
 		line = get_next_line(fd);
+		if (line == NULL)
+		{
+			error_msg("There is no map in file");
+			ft_parsing_error(parse);
+		}
 	}
 	if (first_line_map(line) == 0)
 		content_error(fd, line, parse, 0);
 	return (line);
+}
+
+static	int	check_xpm_extension(char *argv)
+{
+	char	*str;
+	char	*s;
+	int		len;
+	
+	len = ft_strlen(argv);
+	str = argv + len - 4;
+	s = argv + len - 5;
+	printf("le check = %s\n", str);
+	if (ft_strncmp(str, ".xpm", 4) == 0)
+		return (1);
+	return (0);
+}
+
+int	check_xpm_texture(t_parse *parse)
+{
+	int	error = 0;
+	if (check_xpm_extension(parse->north_texture) == 0)
+		error++;
+	if (check_xpm_extension(parse->south_texture) == 0)
+		error++;
+	if (check_xpm_extension(parse->east_texture) == 0)
+		error++;
+	if (check_xpm_extension(parse->west_texture) == 0)
+		error++;
+	printf("error = %d\n", error);
+	if (error == 0)
+		return (1);
+	return (0);
 }
 
 void	get_file_content(char *filename, t_parse *parse)
@@ -242,6 +279,12 @@ void	get_file_content(char *filename, t_parse *parse)
 	{
 		free_double_char(parse->map);
 		error_msg("Map description is not valid");
+		ft_parsing_error(parse);
+	}
+	if (check_xpm_texture(parse) == 0)
+	{
+		free_double_char(parse->map);
+		error_msg("Texture are not xpm");
 		ft_parsing_error(parse);
 	}
 }
