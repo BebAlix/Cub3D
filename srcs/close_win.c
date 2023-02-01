@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:13:06 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/19 13:02:14 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:04:53 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 void	destroy_texture_img(void *mlx, t_info *map_info)
 {
-	mlx_destroy_image(mlx, map_info->n_tex.tex_info.img);
-	mlx_destroy_image(mlx, map_info->s_tex.tex_info.img);
-	mlx_destroy_image(mlx, map_info->e_tex.tex_info.img);
-	mlx_destroy_image(mlx, map_info->w_tex.tex_info.img);
+	if (map_info->n_tex.tex_info.img)
+		mlx_destroy_image(mlx, map_info->n_tex.tex_info.img);
+	if (map_info->s_tex.tex_info.img)
+		mlx_destroy_image(mlx, map_info->s_tex.tex_info.img);
+	if (map_info->e_tex.tex_info.img)
+		mlx_destroy_image(mlx, map_info->e_tex.tex_info.img);
+	if (map_info->w_tex.tex_info.img)
+		mlx_destroy_image(mlx, map_info->w_tex.tex_info.img);
 }
 
 int	close_win(t_data *data)

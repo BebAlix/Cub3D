@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/31 22:28:26 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:44:58 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_ray
 	int		line_height;
 	int		draw_start;
 	int		draw_end;
+	int 	tex_x;
 }				t_ray;
 
 typedef struct s_player
@@ -128,11 +129,21 @@ void	error_msg(char *str);
 void	print_map(t_pixel pixel, t_parse *parse);
 void	print_player(t_pixel pixel, t_player *player, double x, double y, int color);
 void	display_map(t_data *data, t_pixel *pixel, t_info *info);
+void	my_mlx_pixel_put(t_pixel *pixel, int x, int y, int color);
 
 void	free_double_char(char **str);
 void	free_parse_struct(t_parse *parse);
 
 //bonus
 void    ft_mouse(t_data *data);
+
+// raycasting
+void	get_tex_x(t_ray *ray, t_player *player, t_texture texture);
+void	get_vertical_line_size(t_ray *ray);
+void	get_side_dist(t_ray *ray, t_player *player);
+void	get_delta_dist(t_ray *ray, t_player *player);
+void	get_perp_wall_dist(t_ray *ray, char **map);
+
+void	raycasting(t_ray *ray, t_pixel *pixel, t_player *player, t_info *info);
 
 #endif

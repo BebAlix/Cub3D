@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:34:05 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/28 14:14:42 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:46:57 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,6 @@ static	int	check_xpm_extension(char *argv)
 	len = ft_strlen(argv);
 	str = argv + len - 4;
 	s = argv + len - 5;
-	printf("le check = %s\n", str);
 	if (ft_strncmp(str, ".xpm", 4) == 0)
 		return (1);
 	return (0);
@@ -231,7 +230,6 @@ int	check_xpm_texture(t_parse *parse)
 		error++;
 	if (check_xpm_extension(parse->west_texture) == 0)
 		error++;
-	printf("error = %d\n", error);
 	if (error == 0)
 		return (1);
 	return (0);

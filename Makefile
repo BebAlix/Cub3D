@@ -1,5 +1,5 @@
 GREEN = /bin/echo -e "\x1b[1;3;32m$1\x1b[0m"
-SRC = 	srcs/bonus/bonus_mouse.c srcs/main.c srcs/init_vars.c srcs/close_win.c srcs/parsing.c srcs/get_file_content.c srcs/check_errors.c srcs/background_color.c srcs/free.c srcs/play.c srcs/display_map.c srcs/map_error.c 
+SRC = 	srcs/raycasting.c srcs/get_vars_raycasting.c srcs/bonus/bonus_mouse.c srcs/main.c srcs/init_vars.c srcs/close_win.c srcs/parsing.c srcs/get_file_content.c srcs/check_errors.c srcs/background_color.c srcs/free.c srcs/play.c srcs/display_map.c srcs/map_error.c 
 
 
 OBJ = $(SRC:.c=.o)

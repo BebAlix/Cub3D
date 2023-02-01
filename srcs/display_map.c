@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 22:26:08 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/31 22:44:23 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:45:00 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	my_mlx_pixel_put(t_pixel *pixel, int x, int y, int color)
 	*(unsigned int *) dst = color;
 }
 
-void	draw_ceil(t_pixel *pixel, int ceil)
+static void	draw_ceil(t_pixel *pixel, int ceil)
 {
 	int	y;
 	int	x;
@@ -42,7 +42,7 @@ void	draw_ceil(t_pixel *pixel, int ceil)
 	}
 }
 
-void	draw_floor(t_pixel *pixel, int floor)
+static void	draw_floor(t_pixel *pixel, int floor)
 {
 	int	y;
 	int	x;
@@ -60,146 +60,6 @@ void	draw_floor(t_pixel *pixel, int floor)
 		x++;
 	}
 	
-}
-
-unsigned int	my_mlx_get_color(t_pixel *tex_info, int x, int y)
-{
-	char	*dst;
-
-	dst = tex_info->addr + (y * tex_info->line_length + x
-			* (tex_info->bits_per_pixel / 8));
-	return (*(unsigned int *) dst);
-}
-
-t_texture	side_wall(t_info *info, t_ray *ray, t_player *player)
-{
-	if (ray->side == 0 && player->ray_dir_x < 0)
-		return (info->n_tex);
-	if (ray->side == 0 && player->ray_dir_x > 0)
-		return (info->s_tex);
-	if (ray->side == 1 && player->ray_dir_y < 0)
-		return (info->e_tex);
-	if (ray->side == 1 && player->ray_dir_y > 0)
-		return (info->w_tex);
-	return (info->s_tex);
-}
-
-void	get_perp_wall_dist(t_ray *ray, char **map)
-{
-	int	hit = 0;
-
-	while (hit == 0)
-	{
-		if (ray->side_dist_x < ray->side_dist_y)
-		{
-			ray->side_dist_x += ray->delta_dist_x;
-			ray->map_x += ray->step_x;
-			ray->side = 0;
-		}
-		else
-		{
-			ray->side_dist_y += ray->delta_dist_y;
-			ray->map_y += ray->step_y;
-			ray->side = 1;
-		}
-		if (ray->side == 0)
-			ray->perp_wall_dist = (ray->side_dist_x - ray->delta_dist_x);
-		else
-			ray->perp_wall_dist = (ray->side_dist_y - ray->delta_dist_y);
-		if (map[ray->map_y][ray->map_x] == '1')
-			hit = 1;
-	}
-}
-
-
-void	raycasting(t_ray *ray, t_pixel *pixel, t_player *player, t_info *info)
-{
-	int	x;
-
-	double wallX;
-	int texX;
-	double step;
-	double texPos;
-	int y;
-	int texY;
-	int color;
-	t_texture texture;
-
-	x = 0;
-	while (x < WIDTH)
-	{
-		player->camera_x = (2 * x) / (double) WIDTH - 1;
-		player->ray_dir_x = player->pdx + player->plane_x * player->camera_x;
-		player->ray_dir_y = player->pdy + player->plane_y * player->camera_x;
-		ray->map_x = (int) player->x;
-		ray->map_y = (int) player->y;
-		if (player->ray_dir_x == 0)
-			ray->delta_dist_x = 1000;
-		else if (player->ray_dir_x != 0)
-			ray->delta_dist_x = fabs(1 / player->ray_dir_x);
-		if (player->ray_dir_y == 0)
-			ray->delta_dist_y = 1000;
-		else if (player->ray_dir_y != 0)
-			ray->delta_dist_y = fabs(1 / player->ray_dir_y);
-		if (player->ray_dir_x < 0)
-		{
-			ray->step_x = -1;
-			ray->side_dist_x = (player->x - ray->map_x) * ray->delta_dist_x;
-		}
-		else
-		{
-			ray->step_x = 1;
-			ray->side_dist_x = (ray->map_x + 1.0 - player->x) * ray->delta_dist_x;
-		}
-		if (player->ray_dir_y < 0)
-		{
-			ray->step_y = -1;
-			ray->side_dist_y = (player->y - ray->map_y) * ray->delta_dist_y;
-		}
-		else
-		{
-			ray->step_y = 1;
-			ray->side_dist_y = (ray->map_y + 1.0 - player->y) * ray->delta_dist_y;
-		}
-
-		get_perp_wall_dist(ray, info->map);
-
-		ray->line_height = (int)(HEIGHT / ray->perp_wall_dist);
-		ray->draw_start = -ray->line_height / 2 + HEIGHT / 2;
-		if (ray->draw_start < 0)
-			ray->draw_start = 0;
-		ray->draw_end = ray->line_height / 2 + HEIGHT / 2;
-		if (ray->draw_end >= HEIGHT)
-			ray->draw_end = HEIGHT - 1;
-
-    	texture = side_wall(info, ray, player);
-		
-    	if (ray->side == 0)
-			wallX = player->y + ray->perp_wall_dist * player->ray_dir_y;
-    	else
-			wallX = player->x + ray->perp_wall_dist * player->ray_dir_x;
-    	wallX -= floor(wallX);
-
-    	texX = (int)(wallX * (double)texture.w);
-    	if(ray->side == 0 && player->ray_dir_x > 0)
-			texX = texture.w - texX - 1;
-    	if(ray->side == 1 && player->ray_dir_y < 0)
-	  		texX = texture.w - texX - 1;
-
-    	step = 1.0 * texture.h / ray->line_height;
-    	texPos = (ray->draw_start - HEIGHT / 2 + ray->line_height / 2) * step;
-		
-		y = ray->draw_start;
-		while (y < ray->draw_end)
-    	{
-    		texY = (int)texPos;
-    		texPos += step;
-			color = my_mlx_get_color(&texture.tex_info, texX, texY);
-			my_mlx_pixel_put(pixel, x, y, color);
-			y++;
-    	}
-		x++;
-	}
 }
 
 void	display_map(t_data *data, t_pixel *pixel, t_info *info)
