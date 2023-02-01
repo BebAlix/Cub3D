@@ -12,6 +12,12 @@
 
 #include "cub3D.h"
 
+void	ft_parsing_error(t_parse *parse)
+{	
+	free_parse_struct(parse);
+	exit(1);
+}
+
 static void	check_nb_arg(int argc)
 {
 	if (argc != 2)

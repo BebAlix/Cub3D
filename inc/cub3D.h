@@ -117,12 +117,24 @@ void	play(t_data *data);
 int		close_win(t_data *data);
 void	ft_error(t_data *data);
 
+//parsing
+void	parsing(char *filename, t_parse *parse);
 void	check_errors(int argc, char **argv);
 int		check_valid_map(char **map, char *position);
-void	parsing(char *filename, t_parse *parse);
 void	get_file_content(char *filename, t_parse *parse);
+char	*go_to_map(int fd, char *line, t_parse *parse);
+int	first_line_map(char *line);
+int	fill_file_content(char *line, t_parse *parse);
+int	fill_param(char *line, t_parse *parse);
 int		background_color(char **tab, t_parse *parse);
+void	content_error(int fd, char *line, t_parse *parse, int color);
+void	check_parsing_error(t_parse *parse);
 void	error_msg(char *str);
+void	ft_parsing_error(t_parse *parse);
+int	check_xpm_texture(t_parse *parse);
+int	check_line(char *line, t_parse *parse);
+int	check_splitted_line(char **str);
+
 
 void	init_player(t_player *player, char **map, char orientation);
 

@@ -12,7 +12,7 @@
 
 #include "cub3D.h"
 
-int	check_items(char *line, int *player, char *position)
+static int	check_items(char *line, int *player, char *position)
 {
 	int	i;
 
@@ -33,17 +33,7 @@ int	check_items(char *line, int *player, char *position)
 	return (TRUE);
 }
 
-int	map_height(char **map)
-{
-	int	size;
-
-	size = 0;
-	while (map[size])
-		size++;
-	return (size);
-}
-
-int	surrounded(char **map, int i, int j)
+static int	surrounded(char **map, int i, int j)
 {
 	if (j > (int)ft_strlen(map[i + 1]) || j > (int)ft_strlen(map[i - 1]))
 		return (FALSE);
@@ -58,11 +48,16 @@ int	surrounded(char **map, int i, int j)
 	return (TRUE);
 }
 
-int	check_arround(char **map, int i, int j)
+static int	check_arround(char **map, int i, int j)
 {
+	int	size;
+
+	size = 0;
+	while (map[size])
+		size++;
 	if (i == 0 || j == 0)
 		return (FALSE);
-	if (i == map_height(map) - 1)
+	if (i == size - 1)
 		return (FALSE);
 	if (j == (int)ft_strlen(map[i]))
 		return (FALSE);
@@ -71,7 +66,7 @@ int	check_arround(char **map, int i, int j)
 	return (TRUE);
 }
 
-int	check_wall(char **map)
+static int	check_wall(char **map)
 {
 	int	j;
 	int	i;
