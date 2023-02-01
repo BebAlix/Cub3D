@@ -3,6 +3,7 @@ SRC = 	srcs/init_player.c \
 		srcs/raycasting.c \
 		srcs/get_vars_raycasting.c \
 		srcs/bonus/bonus_mouse.c \
+		srcs/bonus/bonus_print_map.c \
 		srcs/main.c \
 		srcs/init_vars.c \
 		srcs/close_win.c \

@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/01 16:16:43 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/01 20:55:06 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define WIDTH 1280
-# define HEIGHT 720
+# define WIDTH 320
+# define HEIGHT 200
 # define SPEED 0.1
+# define PADDING 8
 
 # define TRUE 1
 # define FALSE 0
@@ -112,48 +113,49 @@ typedef struct s_data
 	t_info		info;
 }				t_data;
 
-void	init_vars(t_data *data);
-void	play(t_data *data);
-int		close_win(t_data *data);
-void	ft_error(t_data *data);
-
 //parsing
 void	parsing(char *filename, t_parse *parse);
 void	check_errors(int argc, char **argv);
+void	ft_error(t_data *data);
 int		check_valid_map(char **map, char *position);
 void	get_file_content(char *filename, t_parse *parse);
 char	*go_to_map(int fd, char *line, t_parse *parse);
-int	first_line_map(char *line);
-int	fill_file_content(char *line, t_parse *parse);
-int	fill_param(char *line, t_parse *parse);
+int		first_line_map(char *line);
+int		fill_file_content(char *line, t_parse *parse);
+int		fill_param(char *line, t_parse *parse);
 int		background_color(char **tab, t_parse *parse);
 void	content_error(int fd, char *line, t_parse *parse, int color);
 void	check_parsing_error(t_parse *parse);
 void	error_msg(char *str);
 void	ft_parsing_error(t_parse *parse);
-int	check_xpm_texture(t_parse *parse);
-int	check_line(char *line, t_parse *parse);
-int	check_splitted_line(char **str);
+int		check_xpm_texture(t_parse *parse);
+int		check_line(char *line, t_parse *parse);
+int		check_splitted_line(char **str);
 
-
+//init values
+void	init_vars(t_data *data);
 void	init_player(t_player *player, char **map, char orientation);
 
-void	display_map(t_data *data, t_pixel *pixel, t_info *info);
-void	my_mlx_pixel_put(t_pixel *pixel, int x, int y, int color);
-
-void	free_double_char(char **str);
-void	free_parse_struct(t_parse *parse);
-
-//bonus
-void	ft_mouse(t_data *data);
-
 // raycasting
+void	raycasting(t_ray *ray, t_pixel *pixel, t_player *player, t_info *info);
 void	get_tex_x(t_ray *ray, t_player *player, t_texture texture);
 void	get_vertical_line_size(t_ray *ray);
 void	get_side_dist(t_ray *ray, t_player *player);
 void	get_delta_dist(t_ray *ray, t_player *player);
 void	get_perp_wall_dist(t_ray *ray, char **map);
 
-void	raycasting(t_ray *ray, t_pixel *pixel, t_player *player, t_info *info);
+//play and display image
+void	play(t_data *data);
+void	display_map(t_data *data, t_pixel *pixel, t_info *info);
+void	my_mlx_pixel_put(t_pixel *pixel, int x, int y, int color);
+
+// close program
+int		close_win(t_data *data);
+void	free_parse_struct(t_parse *parse);
+void	free_double_char(char **str);
+
+//bonus
+void	print_map(t_data *data, char **map);
+void	ft_mouse(t_data *data);
 
 #endif
