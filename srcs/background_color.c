@@ -6,17 +6,11 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:06:59 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/28 14:05:57 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/01 16:19:56 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	error_msg(char *str)
-{
-	ft_putendl_fd("Error", 2);
-	ft_putendl_fd(str, 2);
-}
 
 static int	filled_c(t_parse *parse, char **color)
 {

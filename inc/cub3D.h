@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/01 15:44:58 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/01 16:16:43 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ typedef struct s_parse
 typedef struct s_texture
 {
 	t_pixel		tex_info;
-	int		w;
-	int		h;
+	int			w;
+	int			h;
 }				t_texture;
 
 typedef struct s_info
@@ -68,7 +68,6 @@ typedef struct s_info
 	int			ceil;
 	int			floor;
 }				t_info;
-
 
 typedef struct s_ray
 {
@@ -85,7 +84,7 @@ typedef struct s_ray
 	int		line_height;
 	int		draw_start;
 	int		draw_end;
-	int 	tex_x;
+	int		tex_x;
 }				t_ray;
 
 typedef struct s_player
@@ -118,7 +117,6 @@ void	play(t_data *data);
 int		close_win(t_data *data);
 void	ft_error(t_data *data);
 
-int		rgb_to_int(int red, int green, int blue);
 void	check_errors(int argc, char **argv);
 int		check_valid_map(char **map, char *position);
 void	parsing(char *filename, t_parse *parse);
@@ -126,8 +124,8 @@ void	get_file_content(char *filename, t_parse *parse);
 int		background_color(char **tab, t_parse *parse);
 void	error_msg(char *str);
 
-void	print_map(t_pixel pixel, t_parse *parse);
-void	print_player(t_pixel pixel, t_player *player, double x, double y, int color);
+void	init_player(t_player *player, char **map, char orientation);
+
 void	display_map(t_data *data, t_pixel *pixel, t_info *info);
 void	my_mlx_pixel_put(t_pixel *pixel, int x, int y, int color);
 
@@ -135,7 +133,7 @@ void	free_double_char(char **str);
 void	free_parse_struct(t_parse *parse);
 
 //bonus
-void    ft_mouse(t_data *data);
+void	ft_mouse(t_data *data);
 
 // raycasting
 void	get_tex_x(t_ray *ray, t_player *player, t_texture texture);
