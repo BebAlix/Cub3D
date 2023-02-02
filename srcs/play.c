@@ -16,16 +16,16 @@ void	move_player_n_s(t_player *p, char **map, char move)
 {
 	if (move == 'w')
 	{
-		if (map[(int)(p->y)][(int)(p->x + p->pdx * SPEED)] != '1')
+		if (map[(int)(p->y)][(int)(p->x + p->pdx * SPEED * 1.2)] != '1')
 			p->x += p->pdx * SPEED;
-		if (map[(int)(p->y + p->pdy * SPEED)][(int)(p->x)] != '1')
+		if (map[(int)(p->y + p->pdy * SPEED * 1.2)][(int)(p->x)] != '1')
 			p->y += p->pdy * SPEED;
 	}
 	if (move == 's')
 	{
-		if (map[(int)(p->y)][(int)(p->x - p->pdx * SPEED)] != '1')
+		if (map[(int)(p->y)][(int)(p->x - p->pdx * SPEED * 1.2)] != '1')
 			p->x -= p->pdx * SPEED;
-		if (map[(int)(p->y - p->pdy * SPEED)][(int)(p->x)] != '1')
+		if (map[(int)(p->y - p->pdy * SPEED * 1.2)][(int)(p->x)] != '1')
 			p->y -= p->pdy * SPEED;
 	}
 }
@@ -34,16 +34,16 @@ void	move_player_e_w(t_player *p, char **map, char move)
 {
 	if (move == 'd')
 	{
-		if (map[(int)(p->y)][(int)(p->x + p->plane_x * SPEED)] != '1')
+		if (map[(int)(p->y)][(int)(p->x + p->plane_x * SPEED * 1.2)] != '1')
 			p->x += p->plane_x * SPEED;
-		if (map[(int)(p->y + p->plane_y * SPEED)][(int)(p->x)] != '1')
+		if (map[(int)(p->y + p->plane_y * SPEED * 1.2)][(int)(p->x)] != '1')
 			p->y += p->plane_y * SPEED;
 	}
 	if (move == 'a')
 	{
-		if (map[(int)(p->y)][(int)(p->x - p->plane_x * SPEED)] != '1')
+		if (map[(int)(p->y)][(int)(p->x - p->plane_x * SPEED * 1.2)] != '1')
 			p->x -= p->plane_x * SPEED;
-		if (map[(int)(p->y - p->plane_y * SPEED)][(int)(p->x)] != '1')
+		if (map[(int)(p->y - p->plane_y * SPEED * 1.2)][(int)(p->x)] != '1')
 			p->y -= p->plane_y * SPEED;
 	}
 }
