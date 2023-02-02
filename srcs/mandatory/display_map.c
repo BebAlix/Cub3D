@@ -61,10 +61,16 @@ static void	draw_floor(t_pixel *pixel, int floor)
 	}
 }
 
-void	display_map(t_data *data, t_pixel *pixel, t_info *info)
+static void	display_map(t_data *data, t_pixel *pixel, t_info *info)
 {
 	draw_ceil(pixel, data->info.ceil);
 	draw_floor(pixel, data->info.floor);
 	raycasting(&data->ray, pixel, &data->player, info);
 	mlx_put_image_to_window(data->mlx, data->win, data->pixel.img, 0, 0);
+}
+
+int	frame(t_data *data)
+{
+	display_map(data, &data->pixel, &data->info);
+	return (0);
 }

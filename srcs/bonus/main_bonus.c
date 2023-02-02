@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	check_errors(argc, argv);
 	parsing(argv[1], &data.parse);
 	init_vars(&data);
-	display_map(&data, &data.pixel, &data.info);
+	frame(&data);
 	play(&data);
 	return (0);
 }

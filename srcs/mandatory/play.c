@@ -91,7 +91,6 @@ static int	key_hook(int keycode, t_data *data)
 		rotate_player(&data->player, 'l');
 	else
 		return (0);
-	display_map(data, &data->pixel, &data->info);
 	return (0);
 }
 
@@ -99,5 +98,6 @@ void	play(t_data *data)
 {
 	mlx_hook(data->win, 2, 1L << 0, key_hook, data);
 	mlx_hook(data->win, 17, 0, close_win, data);
+	mlx_loop_hook(data->mlx, frame, data);
 	mlx_loop(data->mlx);
 }

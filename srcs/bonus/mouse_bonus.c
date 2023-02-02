@@ -47,12 +47,10 @@ int	mouse(int x, int y, t_data *data)
 	else
 		return (0);
 	mlx_mouse_move(data->mlx, data->win, WIDTH / 2, HEIGHT / 2);
-	display_map(data, &data->pixel, &data->info);
 	return (0);
 }
 
 void	ft_mouse(t_data *data)
 {
-	mlx_mouse_hide(data->mlx, data->win);
 	mlx_hook(data->win, 6, 1L << 6, mouse, data);
 }

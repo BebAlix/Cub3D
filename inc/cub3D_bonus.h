@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/02 18:23:30 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 19:04:25 by chjoie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ typedef struct s_data
 	t_map		map;
 }				t_data;
 
-
 //parsing
 void	parsing(char *filename, t_parse *parse);
 void	check_errors(int argc, char **argv);
@@ -159,7 +158,7 @@ void	get_perp_wall_dist(t_ray *ray, char **map);
 
 //play and display image
 void	play(t_data *data);
-void	display_map(t_data *data, t_pixel *pixel, t_info *info);
+int		frame(t_data *data);
 void	my_mlx_pixel_put(t_pixel *pixel, int x, int y, int color);
 
 // close program
