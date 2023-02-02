@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 22:26:08 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/01 20:57:33 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:41:58 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,5 @@ void	display_map(t_data *data, t_pixel *pixel, t_info *info)
 	draw_ceil(pixel, data->info.ceil);
 	draw_floor(pixel, data->info.floor);
 	raycasting(&data->ray, pixel, &data->player, info);
-	print_map(data, info->map);//bonus
 	mlx_put_image_to_window(data->mlx, data->win, data->pixel.img, 0, 0);
 }

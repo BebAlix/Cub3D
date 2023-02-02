@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:06:19 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/02 17:06:21 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:41:57 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,5 @@ void	play(t_data *data)
 {
 	mlx_hook(data->win, 2, 1L << 0, key_hook, data);
 	mlx_hook(data->win, 17, 0, close_win, data);
-	//ft_mouse(data); // bonus
 	mlx_loop(data->mlx);
 }
