@@ -12,6 +12,21 @@
 
 #include "cub3D.h"
 
+int	first_line_map(char *line)
+{
+	int	x;
+
+	x = 0;
+	while (line[x] != '\0')
+	{
+		if (line[x] == '1' || line[x] == ' ' || line[x] == '\n')
+			x++;
+		else
+			return (FALSE);
+	}
+	return (TRUE);
+}
+
 int	check_all_param(t_parse *parse)
 {
 	if (parse->north_texture == NULL)

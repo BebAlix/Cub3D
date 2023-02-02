@@ -69,35 +69,3 @@ int	fill_file_content(char *line, t_parse *parse)
 	free(tmp);
 	return (TRUE);
 }
-
-int	first_line_map(char *line)
-{
-	int	x;
-
-	x = 0;
-	while (line[x] != '\0')
-	{
-		if (line[x] == '1' || line[x] == ' ' || line[x] == '\n')
-			x++;
-		else
-			return (FALSE);
-	}
-	return (TRUE);
-}
-
-char	*go_to_map(int fd, char *line, t_parse *parse)
-{
-	while (!ft_strncmp(line, "\n", 2))
-	{
-		free(line);
-		line = get_next_line(fd);
-		if (line == NULL)
-		{
-			error_msg("There is no map in file");
-			ft_parsing_error(parse);
-		}
-	}
-	if (first_line_map(line) == 0)
-		content_error(fd, line, parse, 0);
-	return (line);
-}

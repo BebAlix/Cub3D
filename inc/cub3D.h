@@ -21,8 +21,8 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define WIDTH 320
-# define HEIGHT 200
+# define WIDTH 1280
+# define HEIGHT 720
 # define SPEED 0.1
 # define PADDING 8
 

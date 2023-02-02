@@ -12,6 +12,12 @@
 
 #include "cub3D.h"
 
+void	ft_parsing_error(t_parse *parse)
+{	
+	free_parse_struct(parse);
+	exit(1);
+}
+
 static void	ft_remove_n(char *str)
 {
 	int	x;
@@ -55,4 +61,21 @@ void	content_error(int fd, char *line, t_parse *parse, int color)
 	if (color != -2)
 		error_msg("File content is not valid");
 	ft_parsing_error(parse);
+}
+
+char	*go_to_map(int fd, char *line, t_parse *parse)
+{
+	while (!ft_strncmp(line, "\n", 2))
+	{
+		free(line);
+		line = get_next_line(fd);
+		if (line == NULL)
+		{
+			error_msg("There is no map in file");
+			ft_parsing_error(parse);
+		}
+	}
+	if (first_line_map(line) == 0)
+		content_error(fd, line, parse, 0);
+	return (line);
 }

@@ -39,7 +39,15 @@ static int	surrounded(char **map, int i, int j)
 		return (FALSE);
 	if (!ft_strchr("0WSEN1", map[i - 1][j]) || map[i - 1][j] == '\0')
 		return (FALSE);
+	if (!ft_strchr("0WSEN1", map[i - 1][j + 1]) || map[i - 1][j + 1] == '\0')
+		return (FALSE);
+	if (!ft_strchr("0WSEN1", map[i - 1][j - 1]) || map[i - 1][j - 1] == '\0')
+		return (FALSE);
 	if (!ft_strchr("0WSEN1", map[i + 1][j]) || map[i + 1][j] == '\0')
+		return (FALSE);
+	if (!ft_strchr("0WSEN1", map[i + 1][j + 1]) || map[i + 1][j + 1] == '\0')
+		return (FALSE);
+	if (!ft_strchr("0WSEN1", map[i + 1][j - 1]) || map[i + 1][j - 1] == '\0')
 		return (FALSE);
 	if (!ft_strchr("0WSEN1", map[i][j - 1]) || map[i][j - 1] == '\0')
 		return (FALSE);
