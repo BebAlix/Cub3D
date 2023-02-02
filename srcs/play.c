@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:06:19 by equesnel          #+#    #+#             */
-/*   Updated: 2023/01/31 22:43:43 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:06:21 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,6 @@ void	rotate_player(t_player *p, char move)
 		p->plane_x = p->plane_x * cos(-speed) - p->plane_y * sin(-speed);
 		p->plane_y = old_plane_x * sin(-speed) + p->plane_y * cos(-speed);
 	}
-	
-	printf("\n\n");
-	printf("pdx %f\n", p->pdx);
-	printf("pdy = %f\n", p->pdy);
-	printf("p->plane_x = %f\n", p->plane_x);
-	printf("p->plane_y = %f\n", p->plane_y);
 }
 
 static int	key_hook(int keycode, t_data *data)

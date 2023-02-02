@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:02:09 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/01 16:11:47 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:11:09 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ static void	init_orientation_n_s(t_player *player, char orientation)
 		player->plane_x = 0.66;
 		player->plane_y = 0;
 	}
-	
-	
 	if (orientation == 'S')
 	{
 		player->pdx = 0;

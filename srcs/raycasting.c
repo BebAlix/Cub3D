@@ -6,7 +6,7 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:37:42 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/01 15:51:00 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:06:07 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	draw_line_texture(t_ray *ray, t_texture texture,
 	tex_pos = (ray->draw_start - HEIGHT / 2 + ray->line_height / 2) * step;
 	y = ray->draw_start;
 	ray->tex_x = texture.w - ray->tex_x;
-	while (y < ray->draw_end)
+	while (y < ray->draw_end + 1)
 	{
 		tex_y = (int)tex_pos;
 		tex_pos += step;
