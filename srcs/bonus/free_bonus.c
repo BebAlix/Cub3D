@@ -6,11 +6,11 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:42:24 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/02 17:46:34 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:13:55 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 void	free_double_char(char **str)
 {

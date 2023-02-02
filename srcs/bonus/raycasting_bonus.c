@@ -6,11 +6,11 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:37:42 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/02 17:46:01 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:13:51 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 static unsigned int	my_mlx_get_color(t_pixel *tex_info, int x, int y)
 {

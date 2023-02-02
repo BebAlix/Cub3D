@@ -6,11 +6,11 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:06:59 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/02 17:45:34 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:12:48 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 static int	filled_c(t_parse *parse, char **color)
 {

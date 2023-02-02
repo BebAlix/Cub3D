@@ -6,11 +6,11 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 22:26:08 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/02 17:55:41 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:15:15 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 void	my_mlx_pixel_put(t_pixel *pixel, int x, int y, int color)
 {
@@ -66,6 +66,6 @@ void	display_map(t_data *data, t_pixel *pixel, t_info *info)
 	draw_ceil(pixel, data->info.ceil);
 	draw_floor(pixel, data->info.floor);
 	raycasting(&data->ray, pixel, &data->player, info);
-	print_map(data, info->map);
+	print_map(data, data->map, info->map);
 	mlx_put_image_to_window(data->mlx, data->win, data->pixel.img, 0, 0);
 }

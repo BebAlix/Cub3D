@@ -33,7 +33,8 @@ SRC_BONUS =	srcs/bonus/init_player_bonus.c \
 			srcs/bonus/parsing/map_error_bonus.c \
 			srcs/bonus/free_bonus.c \
 			srcs/bonus/play_bonus.c \
-			srcs/bonus/display_map_bonus.c
+			srcs/bonus/display_map_bonus.c \
+			srcs/bonus/change_map_bonus.c
 
 OBJ = $(SRC:.c=.o)
 OBJ_BONUS = $(SRC_BONUS:.c=.o)

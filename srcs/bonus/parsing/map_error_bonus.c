@@ -6,11 +6,11 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 14:38:25 by chjoie            #+#    #+#             */
-/*   Updated: 2023/02/02 17:45:31 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:12:45 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 static int	check_items(char *line, int *player, char *position)
 {

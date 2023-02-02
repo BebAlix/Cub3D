@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
+/*   cub3D_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:03:21 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/02 18:15:49 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:23:30 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include "../libft/inc/libft.h"
 # include "../libft/inc/get_next_line.h"
@@ -102,6 +102,17 @@ typedef struct s_player
 	double	pa;
 }				t_player;
 
+typedef struct s_map
+{
+	char	**new_map;
+	int		y;
+	int		x;
+	int		y_max;
+	int		x_max;
+	int		old_x;
+	int		old_y;
+}				t_map;
+
 typedef struct s_data
 {
 	void		*mlx;
@@ -111,7 +122,9 @@ typedef struct s_data
 	t_player	player;
 	t_ray		ray;
 	t_info		info;
+	t_map		map;
 }				t_data;
+
 
 //parsing
 void	parsing(char *filename, t_parse *parse);
@@ -153,5 +166,10 @@ void	my_mlx_pixel_put(t_pixel *pixel, int x, int y, int color);
 int		close_win(t_data *data);
 void	free_parse_struct(t_parse *parse);
 void	free_double_char(char **str);
+
+//bonus
+void	print_map(t_data *data, t_map m, char **map);
+char	**change_map(char **map);
+void	ft_mouse(t_data *data);
 
 #endif

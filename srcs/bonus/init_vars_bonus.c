@@ -6,11 +6,11 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 14:26:39 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/02 17:46:38 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:13:53 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 static int	rgb_to_int(int red, int green, int blue)
 {

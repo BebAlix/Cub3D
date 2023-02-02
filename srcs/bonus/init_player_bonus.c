@@ -6,11 +6,11 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:02:09 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/02 17:46:36 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:13:53 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 static void	init_orientation_n_s(t_player *player, char orientation)
 {

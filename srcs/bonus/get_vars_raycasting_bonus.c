@@ -6,11 +6,11 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:38:44 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/02 17:46:35 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:13:54 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 void	get_perp_wall_dist(t_ray *ray, char **map)
 {

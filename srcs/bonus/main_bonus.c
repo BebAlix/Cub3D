@@ -6,11 +6,11 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:16:19 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/02 17:46:40 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:13:52 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 int	main(int argc, char **argv)
 {

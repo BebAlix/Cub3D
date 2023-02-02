@@ -6,11 +6,11 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 22:08:37 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/02 17:45:33 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:12:47 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 static void	check_nb_arg(int argc)
 {

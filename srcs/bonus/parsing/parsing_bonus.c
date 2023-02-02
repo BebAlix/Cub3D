@@ -6,11 +6,11 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 21:43:07 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/02 17:45:31 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:12:44 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 void	check_parsing_error(t_parse *parse)
 {

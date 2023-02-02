@@ -6,11 +6,11 @@
 /*   By: equesnel <equesnel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 21:52:37 by equesnel          #+#    #+#             */
-/*   Updated: 2023/02/02 17:46:39 by equesnel         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:13:52 by equesnel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 void	rotate_player_mouse(t_player *p, char move)
 {
@@ -21,14 +21,14 @@ void	rotate_player_mouse(t_player *p, char move)
 	old_dir_x = p->pdx;
 	old_plane_x = p->plane_x;
 	speed = SPEED / 7;
-	if (move == 'l')
+	if (move == 'r')
 	{
 		p->pdx = p->pdx * cos(speed) - p->pdy * sin(speed);
 		p->pdy = old_dir_x * sin(speed) + p->pdy * cos(speed);
 		p->plane_x = p->plane_x * cos(speed) - p->plane_y * sin(speed);
 		p->plane_y = old_plane_x * sin(speed) + p->plane_y * cos(speed);
 	}
-	if (move == 'r')
+	if (move == 'l')
 	{
 		p->pdx = p->pdx * cos(-speed) - p->pdy * sin(-speed);
 		p->pdy = old_dir_x * sin(-speed) + p->pdy * cos(-speed);
