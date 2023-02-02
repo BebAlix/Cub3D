@@ -16,17 +16,19 @@ static void	init_orientation_n_s(t_player *player, char orientation)
 {
 	if (orientation == 'N')
 	{
-		player->pdx = -1;
-		player->pdy = 0;
-		player->plane_x = 0;
-		player->plane_y = 0.66;
+		player->pdx = 0;
+		player->pdy = -1;
+		player->plane_x = 0.66;
+		player->plane_y = 0;
 	}
+	
+	
 	if (orientation == 'S')
 	{
-		player->pdx = 1;
-		player->pdy = 0;
-		player->plane_x = 0;
-		player->plane_y = -0.66;
+		player->pdx = 0;
+		player->pdy = 1;
+		player->plane_x = -0.66;
+		player->plane_y = 0;
 	}
 }
 
@@ -34,17 +36,17 @@ static void	init_orientation_e_w(t_player *player, char orientation)
 {
 	if (orientation == 'E')
 	{
-		player->pdx = 0;
-		player->pdy = -1;
-		player->plane_x = -0.66;
-		player->plane_y = 0;
+		player->pdx = 1;
+		player->pdy = 0;
+		player->plane_x = 0;
+		player->plane_y = 0.66;
 	}
 	if (orientation == 'W')
 	{
-		player->pdx = 0;
-		player->pdy = 1;
-		player->plane_x = 0.66;
-		player->plane_y = 0;
+		player->pdx = -1;
+		player->pdy = 0;
+		player->plane_x = 0;
+		player->plane_y = -0.66;
 	}
 }
 

@@ -57,20 +57,26 @@ void	rotate_player(t_player *p, char move)
 	speed = SPEED / 2;
 	old_dir_x = p->pdx;
 	old_plane_x = p->plane_x;
-	if (move == 'l')
+	if (move == 'r')
 	{
 		p->pdx = p->pdx * cos(speed) - p->pdy * sin(speed);
 		p->pdy = old_dir_x * sin(speed) + p->pdy * cos(speed);
 		p->plane_x = p->plane_x * cos(speed) - p->plane_y * sin(speed);
 		p->plane_y = old_plane_x * sin(speed) + p->plane_y * cos(speed);
 	}
-	if (move == 'r')
+	if (move == 'l')
 	{
 		p->pdx = p->pdx * cos(-speed) - p->pdy * sin(-speed);
 		p->pdy = old_dir_x * sin(-speed) + p->pdy * cos(-speed);
 		p->plane_x = p->plane_x * cos(-speed) - p->plane_y * sin(-speed);
 		p->plane_y = old_plane_x * sin(-speed) + p->plane_y * cos(-speed);
 	}
+	
+	printf("\n\n");
+	printf("pdx %f\n", p->pdx);
+	printf("pdy = %f\n", p->pdy);
+	printf("p->plane_x = %f\n", p->plane_x);
+	printf("p->plane_y = %f\n", p->plane_y);
 }
 
 static int	key_hook(int keycode, t_data *data)
