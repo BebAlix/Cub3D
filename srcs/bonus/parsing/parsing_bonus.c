@@ -74,7 +74,7 @@ static void	init_parse_struct(t_parse *parse)
 		parse->c[i] = -1;
 		i++;
 	}
-	parse->file_content = calloc(sizeof(char), 1);
+	parse->file_content = ft_calloc(sizeof(char), 1);
 	return ;
 }
 
