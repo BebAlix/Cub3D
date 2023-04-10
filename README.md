@@ -1,7 +1,5 @@
 # Cub3D
 
-# so_long
-
 Small 3D game using raycasting with basic gameplay.
 
 ## How it works
